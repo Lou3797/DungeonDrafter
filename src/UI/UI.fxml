@@ -54,9 +54,21 @@
                 </FXCollections>
             </items>
         </ListView>
-        <Button id="addlayer" text="New Layer"
-                onAction="#addLayer">
-        </Button>
+        <HBox id="layerbuttons"
+              GridPane.rowIndex="1">
+            <Button id="addlayer" text="New Layer"
+                    onAction="#addLayer">
+            </Button>
+            <Button id="shiftlayerup" text="↑"
+                    onAction="#shiftLayerUp">
+            </Button>
+            <Button id="shiftlayerdown" text="↓"
+                    onAction="#shiftLayerDown">
+            </Button>
+            <Button id="deletelayer" text="Delete Layer"
+                    onAction="#deleteLayer">
+            </Button>
+        </HBox>
         <ColorPicker  fx:id="colorPicker" onAction="#changeColor">
             <value>
                 <Color/>

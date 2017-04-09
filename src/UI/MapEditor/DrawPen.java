@@ -1,4 +1,6 @@
-package UI;
+package UI.MapEditor;
+
+import UI.UI;
 
 import java.util.ArrayList;
 

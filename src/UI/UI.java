@@ -13,7 +13,7 @@ public class UI extends Application{
 
         Scene scene = new Scene(root, 1080, 720);
 
-        primaryStage.setTitle("Dungeon Drafter v0.0.2");
+        primaryStage.setTitle("Dungeon Drafter v0.0.3");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
