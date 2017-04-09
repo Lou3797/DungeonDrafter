@@ -1,9 +1,5 @@
 package UI.MapEditor;
 
-import UI.UI;
-
-import java.util.ArrayList;
-
 public class DrawPen {
     private int size;
     private double[] xPoints;
