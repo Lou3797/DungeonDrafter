@@ -1,0 +1,23 @@
+.root {
+    -fx-grid-lines-visible: true;
+}
+
+#accorcontainer {
+
+}
+
+#map {
+
+}
+
+#mapcontainer {
+
+}
+
+#rightpane {
+
+}
+
+#texture1 {
+    -fx-graphic: url("cw1.jpg");
+}
