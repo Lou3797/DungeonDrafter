@@ -5,6 +5,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 
 public class ClippingGroup {
@@ -30,6 +31,7 @@ public class ClippingGroup {
         textureFill.getGraphicsContext2D().fillRect(0, 0, textureFill.getWidth(), textureFill.getHeight());
 
         SnapshotParameters sp = new SnapshotParameters();
+        sp.setFill(Color.TRANSPARENT);
         PixelReader textureReader = textureFill.snapshot(sp, null).getPixelReader();
         PixelReader baseReader = base.snapshot(sp, null).getPixelReader();
         PixelWriter writer = base.getGraphicsContext2D().getPixelWriter();

@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
@@ -24,12 +25,12 @@ public class UIController {
         //After the FXML is loaded
         canvasManager = new CanvasManager(mapcontainer, 540, 720);
         layerslist.getSelectionModel().select(0);
-        canvasManager.addLayer();
+        canvasManager.addLayer(new Image("UI/MapEditor/cw1.jpg"));
     }
 
     @FXML
     protected void changeTexture(ActionEvent event) {
-        //Empty body
+        canvasManager.applyClipping();
     }
 
     @FXML
@@ -42,7 +43,7 @@ public class UIController {
     public void addLayer(ActionEvent actionEvent) {
         String newLayer = "Layer " + (layerslist.getItems().size());
         layerslist.getItems().add(layerslist.getSelectionModel().getSelectedIndex(), newLayer);
-        canvasManager.addLayer();
+        canvasManager.addLayer(new Image("UI/MapEditor/cw1.jpg"));
         layerslist.getSelectionModel().select(canvasManager.getCurPos());
 
     }

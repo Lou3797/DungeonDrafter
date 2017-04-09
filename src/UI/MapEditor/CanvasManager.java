@@ -2,6 +2,7 @@ package UI.MapEditor;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -14,7 +15,7 @@ public class CanvasManager {
     private int height;
     private int curPos;
     private Pane parent;
-    private ArrayList<Canvas> layers;
+    private ArrayList<ClippingGroup> layers;
     private Color color;
     private DrawPen pen;
 
@@ -32,8 +33,8 @@ public class CanvasManager {
      * Inserts a new Canvas above the current position
      * @return The newly created canvas
      */
-    public Canvas addLayer() {
-        return createCanvas();
+    public Canvas addLayer(Image texture) {
+        return createCanvas(texture);
     }
 
     public Canvas deleteLayer() {
@@ -42,10 +43,10 @@ public class CanvasManager {
             return null;
         } else if(curPos == 0) {
             parent.getChildren().remove(curPos);
-            return layers.remove(curPos);
+            return layers.remove(curPos).getBase();
         } else{
             parent.getChildren().remove(curPos);
-            return layers.remove(curPos--);
+            return layers.remove(curPos--).getBase();
         }
     }
 
@@ -60,7 +61,7 @@ public class CanvasManager {
     public Canvas changeLayer(int curPos) {
         this.curPos = curPos;
         updateGraphicsContext();
-        return layers.get(curPos);
+        return layers.get(curPos).getBase();
     }
 
     private void updateGraphicsContext() {
@@ -68,17 +69,17 @@ public class CanvasManager {
         getGraphicsContext2D().setFill(this.color);
     }
 
-    private Canvas createCanvas() {
+    private Canvas createCanvas(Image texture) {
         Canvas temp = new Canvas(width, height);
         parent.getChildren().add(curPos, temp);
-        layers.add(curPos, temp);
+        layers.add(curPos, new ClippingGroup(temp, texture));
         attachDrawListener(temp);
         updateGraphicsContext();
         return temp;
     }
 
     public GraphicsContext getGraphicsContext2D() {
-        return layers.get(curPos).getGraphicsContext2D();
+        return layers.get(curPos).getBase().getGraphicsContext2D();
     }
 
     public Color getColor() {
@@ -125,5 +126,9 @@ public class CanvasManager {
             clearCanvas();
             pen.clear();
         }
+    }
+
+    public void applyClipping() {
+        layers.get(curPos).applyClipping();
     }
 }
