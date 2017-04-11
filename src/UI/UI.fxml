@@ -21,13 +21,17 @@
                minWidth="270">
         <panes>
             <TitledPane text="Textures">
-                <Button id="texture1" text="Button"
-                        onAction="#changeTexture">
-
-                </Button>
+                <VBox>
+                    <Button id="texture1" text="Button"
+                            onAction="#changeTexture">
+                    </Button>
+                    <Button id="texture2" text="Button"
+                            onAction="#changeTexture">
+                    </Button>
+                </VBox>
             </TitledPane>
             <TitledPane text="Images">
-                <Text fx:id="testText" text="Load image files here."/>
+                <Text text="Load image files here."/>
             </TitledPane>
         </panes>
 
@@ -61,7 +65,7 @@
             </Button>
             <Button id="shiftlayerup" text="↑"
                     onAction="#shiftLayerUp">
-            </Button>
+            </Button    >
             <Button id="shiftlayerdown" text="↓"
                     onAction="#shiftLayerDown">
             </Button>
@@ -76,6 +80,7 @@
         </ColorPicker>
         <TabPane tabClosingPolicy="UNAVAILABLE">
             <Tab text="Other">
+                <Button text="Apply Clipping" onAction="#applyClipping"/>
             </Tab>
         </TabPane>
 

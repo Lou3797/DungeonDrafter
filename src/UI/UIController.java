@@ -4,6 +4,7 @@ import UI.MapEditor.CanvasManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Control;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -15,9 +16,11 @@ public class UIController {
     public ColorPicker colorPicker;
     public ListView layerslist;
     private CanvasManager canvasManager;
+    private Image selectedTexture;
 
     public UIController() {
         //Before the FXML is loaded
+        selectedTexture = new Image("UI/MapEditor/cw1.jpg");
     }
 
     @FXML
@@ -25,12 +28,21 @@ public class UIController {
         //After the FXML is loaded
         canvasManager = new CanvasManager(mapcontainer, 540, 720);
         layerslist.getSelectionModel().select(0);
-        canvasManager.addLayer(new Image("UI/MapEditor/cw1.jpg"));
+        canvasManager.addLayer(selectedTexture);
     }
 
     @FXML
     protected void changeTexture(ActionEvent event) {
-        canvasManager.applyClipping();
+        switch(((Control)event.getSource()).getId()) {
+            case "texture1":
+                selectedTexture = new Image("UI/MapEditor/cw1.jpg");
+                break;
+            case "texture2":
+                selectedTexture = new Image("UI/MapEditor/cw2.jpg");
+                break;
+        }
+
+
     }
 
     @FXML
@@ -43,7 +55,8 @@ public class UIController {
     public void addLayer(ActionEvent actionEvent) {
         String newLayer = "Layer " + (layerslist.getItems().size());
         layerslist.getItems().add(layerslist.getSelectionModel().getSelectedIndex(), newLayer);
-        canvasManager.addLayer(new Image("UI/MapEditor/cw1.jpg"));
+        canvasManager.addLayer(selectedTexture);
+        layerslist.getSelectionModel().select(canvasManager.getCurPos());
         layerslist.getSelectionModel().select(canvasManager.getCurPos());
 
     }
@@ -73,5 +86,9 @@ public class UIController {
     public void shiftLayerDown(ActionEvent actionEvent) {
         canvasManager.shiftDown();
         layerslist.getSelectionModel().select(canvasManager.getCurPos());
+    }
+
+    public void applyClipping(ActionEvent actionEvent) {
+        canvasManager.applyClipping();
     }
 }

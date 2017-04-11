@@ -11,6 +11,7 @@
 }
 
 #mapcontainer {
+    -fx-background-color: gray;
 
 }
 
@@ -20,4 +21,8 @@
 
 #texture1 {
     -fx-graphic: url("MapEditor/cw1.jpg");
+}
+
+#texture2 {
+    -fx-graphic: url("MapEditor/cw2.jpg");
 }
