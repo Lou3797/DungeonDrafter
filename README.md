@@ -5,7 +5,7 @@ A JavaFX based application used for creating Dungeons and Dragons maps utilizing
 
 ### To-do:
 -[ ] Implement dropshadow on boundary
--[ ] Improve UI with more logically placed tabs
+-[ ] Improve mainui with more logically placed tabs
 -[ ] Implement image dragging
 -[ ] Implement layer moving
 -[ ] Create standard keyboard and mouse controls

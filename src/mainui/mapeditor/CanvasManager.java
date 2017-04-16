@@ -1,4 +1,4 @@
-package UI.MapEditor;
+package mainui.mapeditor;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

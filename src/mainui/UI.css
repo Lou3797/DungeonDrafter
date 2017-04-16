@@ -1,0 +1,33 @@
+.root {
+    -fx-grid-lines-visible: true;
+}
+
+#accorcontainer {
+
+}
+
+#map {
+
+}
+
+#mapTabPane {
+    -fx-background-color: gray;
+}
+
+#mapPane  {
+    -fx-background-color: gray;
+
+}
+
+#rightpane {
+
+}
+
+#texture1 {
+    /*-fx-graphic: url("mapeditor/cw1.jpg");*/
+    -fx-graphic: url("../../../../res/textures/cw1.jpg");
+}
+
+#texture2 {
+    -fx-graphic: url("mapeditor/cw2.jpg");
+}

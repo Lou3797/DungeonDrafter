@@ -1,4 +1,4 @@
-package UI.MapEditor;
+package mainui.mapeditor;
 
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
