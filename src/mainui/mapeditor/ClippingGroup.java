@@ -26,7 +26,7 @@ public class ClippingGroup {
     }
 
     public void applyClipping() {
-        Canvas textureFill = new Canvas(base.getWidth(), base.getHeight());
+        /*Canvas textureFill = new Canvas(base.getWidth(), base.getHeight());
         textureFill.getGraphicsContext2D().setFill(texture);
         textureFill.getGraphicsContext2D().fillRect(0, 0, textureFill.getWidth(), textureFill.getHeight());
 
@@ -47,7 +47,7 @@ public class ClippingGroup {
                     writer.setArgb(x, y, resultARGB);
                 }
             }
-        }
+        }*/
 
     }
 

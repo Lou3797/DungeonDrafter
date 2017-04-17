@@ -1,5 +1,7 @@
 package mapeditor.layerlist;
 
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -49,6 +51,9 @@ public class LayerListCell extends GridPane {
         add(textureThumbnail, 1, 0, 1, 2);
         add(layerNameLabel, 2, 0, 2, 1);
         add(opacityLabel, 2, 1);
+
+        visibleToggle.addEventHandler(ActionEvent.ACTION, this::toggleLayerHide);
+
         //setGridLinesVisible(true);
         ColumnConstraints column0 = new ColumnConstraints();
         ColumnConstraints column1 = new ColumnConstraints();
@@ -60,6 +65,14 @@ public class LayerListCell extends GridPane {
         getColumnConstraints().addAll(column0, column1, column2, column3);
         add(optionsButton, 3, 1);
         GridPane.setHalignment(optionsButton, HPos.RIGHT);
+    }
+
+    private void toggleLayerHide(ActionEvent actionEvent) {
+        if(visibleToggle.isSelected()) {
+            layer.showLayer();
+        }else {
+            layer.hideLayer();
+        }
     }
 
     public Layer getLayer() {

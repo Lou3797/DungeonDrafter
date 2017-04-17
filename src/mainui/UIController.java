@@ -24,7 +24,8 @@ import java.util.ArrayList;
 public class UIController {
 
     private ArrayList<MapFile> loadedFiles;
-    @FXML VBox rightPane;
+    private ArrayList<Pane> mapPanes;
+    @FXML private VBox rightPane;
     @FXML private Pane mapPane;
     @FXML private ColorPicker colorPicker;
     @FXML private ListView<LayerListCell> layersListView;
@@ -36,6 +37,7 @@ public class UIController {
     public UIController() {
         //Before the FXML is loaded
         loadedFiles = new ArrayList<>();
+        mapPanes = new ArrayList<>();
     }
 
     @FXML
@@ -70,7 +72,8 @@ public class UIController {
             if(controller.isNewCreated()) {
                 LayerListCell cell = new LayerListCell(loadedFiles.get(0), controller.getLayerName(), "mainui/mapeditor/cw1.jpg");
                 layersListView.getItems().add(cell);
-                mapTabPane.getTabs().get(0).setContent(cell.getLayer().getCanvas());
+                //mapTabPane.getTabs().get(0).setContent(cell.getLayer().getCanvas());
+                mapPanes.get(0).getChildren().add(cell.getLayer().getCanvas());
             }
 
         } catch(IOException e) {
@@ -121,7 +124,10 @@ public class UIController {
                 MapFile mapFile = new MapFile(controller.getMapName(), controller.getWidth(), controller.getHeight());
                 loadedFiles.add(mapFile);
                 ScrollPane scrollPane = new ScrollPane();
-                scrollPane.setStyle("-fx-background-color: grey");
+                Pane pane = new Pane();
+                mapPanes.add(pane);
+                scrollPane.setContent(pane);
+                pane.setStyle("-fx-background-color: grey");
                 Tab tab = new Tab(controller.getMapName(), scrollPane);
                 mapTabPane.getTabs().add(tab);
                 rightPane.setDisable(false);

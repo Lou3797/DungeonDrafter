@@ -104,7 +104,7 @@ public class CanvasManager {
     }
 
     private void click(MouseEvent event) {
-        if(event.getButton().equals(MouseButton.PRIMARY)) {
+        /*if(event.getButton().equals(MouseButton.PRIMARY)) {
             pen.addPoint(event.getX(), event.getY());
             if(pen.getSize() > 1) {
                 getGraphicsContext2D().strokeLine(pen.getxPoints()[pen.getSize()-2],
@@ -125,7 +125,7 @@ public class CanvasManager {
         } else if(event.isShiftDown() && event.getButton().equals(MouseButton.SECONDARY)) {
             clearCanvas();
             pen.clear();
-        }
+        }*/
     }
 
     public void applyClipping() {
