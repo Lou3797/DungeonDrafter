@@ -1,4 +1,4 @@
-package mapeditor.layerlist;
+package mapeditor;
 
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
@@ -10,8 +10,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import mainui.mapeditor.DrawPen;
-import mapeditor.MapFile;
+import mainui.DELmapeditor.DrawPen;
 
 public class Layer {
 

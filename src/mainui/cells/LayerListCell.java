@@ -1,7 +1,6 @@
-package mapeditor.layerlist;
+package mainui.cells;
 
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.ImagePattern;
+import mapeditor.Layer;
 import mapeditor.MapFile;
 
 public class LayerListCell extends GridPane {

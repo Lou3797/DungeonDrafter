@@ -1,7 +1,7 @@
 package mapeditor;
 
 import javafx.scene.control.ListView;
-import mapeditor.layerlist.LayerListCell;
+import mainui.cells.LayerListCell;
 
 public class MapFile {
     private String mapName;

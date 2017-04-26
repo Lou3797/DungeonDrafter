@@ -7,7 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import mainui.mapeditor.CanvasManager;
+import mainui.DELmapeditor.CanvasManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
@@ -16,7 +16,7 @@ import javafx.scene.layout.Pane;
 import mainui.popups.newfile.NewFilePopup;
 import mainui.popups.newlayer.NewLayerPopup;
 import mapeditor.MapFile;
-import mapeditor.layerlist.LayerListCell;
+import mainui.cells.LayerListCell;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -70,8 +70,8 @@ public class UIController {
             stage.initOwner(UI.primaryStage);
             stage.showAndWait();
             if(controller.isNewCreated()) {
-                LayerListCell cell = new LayerListCell(loadedFiles.get(0), controller.getLayerName(), "mainui/mapeditor/cw1.jpg");
-                layersListView.getItems().add(cell);
+                LayerListCell cell = new LayerListCell(loadedFiles.get(0), controller.getLayerName(), controller.getSelectedTexture().getPath());
+                layersListView.getItems().add(layersListView.getSelectionModel().getSelectedIndex()+1, cell);
                 //mapTabPane.getTabs().get(0).setContent(cell.getLayer().getCanvas());
                 mapPanes.get(0).getChildren().add(cell.getLayer().getCanvas());
             }

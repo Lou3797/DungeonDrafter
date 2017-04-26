@@ -1,11 +1,7 @@
-package mainui.mapeditor;
+package mainui.DELmapeditor;
 
-import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 
 public class ClippingGroup {

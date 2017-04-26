@@ -1,4 +1,4 @@
-package mainui.mapeditor;
+package mainui.DELmapeditor;
 
 public class DrawPen {
     private int size;

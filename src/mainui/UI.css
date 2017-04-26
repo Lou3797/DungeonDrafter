@@ -24,10 +24,10 @@
 }
 
 #texture1 {
-    /*-fx-graphic: url("mapeditor/cw1.jpg");*/
+    /*-fx-graphic: url("DELmapeditor/cw1.jpg");*/
     -fx-graphic: url("../../../../res/textures/cw1.jpg");
 }
 
 #texture2 {
-    -fx-graphic: url("mapeditor/cw2.jpg");
+    -fx-graphic: url("DELmapeditor/cw2.jpg");
 }
