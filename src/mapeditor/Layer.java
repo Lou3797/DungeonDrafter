@@ -3,6 +3,7 @@ package mapeditor;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
@@ -81,12 +82,20 @@ public class Layer {
         canvas.setOpacity(value);
     }
 
-    public void hideLayer() {
-        canvas.setOpacity(0);
+    public void showShadows(boolean show) {
+        if(show) {
+            canvas.setEffect(new DropShadow(40.0, Color.BLACK));
+        } else {
+            canvas.setEffect(null);
+        }
     }
 
-    public void showLayer() {
-        canvas.setOpacity(opacity);
+    public void showLayer(boolean show) {
+        if(show) {
+            canvas.setOpacity(opacity);
+        }else {
+            canvas.setOpacity(0);
+        }
     }
 
     public void setTexture(String imageURL) {

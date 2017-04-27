@@ -53,6 +53,7 @@ public class LayerListCell extends GridPane {
         add(opacityLabel, 2, 1);
 
         visibleToggle.addEventHandler(ActionEvent.ACTION, this::toggleLayerHide);
+        shadowsToggle.addEventHandler(ActionEvent.ACTION, this::toggleShadows);
 
         //setGridLinesVisible(true);
         ColumnConstraints column0 = new ColumnConstraints();
@@ -69,14 +70,22 @@ public class LayerListCell extends GridPane {
 
     private void toggleLayerHide(ActionEvent actionEvent) {
         if(visibleToggle.isSelected()) {
-            layer.showLayer();
+            layer.showLayer(true);
         }else {
-            layer.hideLayer();
+            layer.showLayer(false);
         }
     }
 
     public Layer getLayer() {
         return layer;
+    }
+
+    private void toggleShadows(ActionEvent actionEvent) {
+        if(shadowsToggle.isSelected()) {
+            layer.showShadows(true);
+        }else {
+            layer.showShadows(false);
+        }
     }
 
 }

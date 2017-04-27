@@ -25,14 +25,7 @@
         <Accordion prefWidth="270" minWidth="100">
             <panes>
                 <TitledPane text="Textures">
-                    <VBox>
-                        <Button id="texture1" text="Button"
-                                onAction="#changeTexture">
-                        </Button>
-                        <Button id="texture2" text="Button"
-                                onAction="#changeTexture">
-                        </Button>
-                    </VBox>
+                    <Text text="Placeholder text"/>
                 </TitledPane>
                 <TitledPane text="Images">
                     <Text text="Load image files here."/>
