@@ -4,6 +4,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
+@Deprecated
 public class ClippingGroup {
     private ImagePattern texture;
     private Canvas base;

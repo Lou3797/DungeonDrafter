@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
+@Deprecated
 public class CanvasManager {
 
     private int width;

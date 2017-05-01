@@ -1,5 +1,6 @@
 package mainui.DELmapeditor;
 
+@Deprecated
 public class DrawPen {
     private int size;
     private double[] xPoints;
