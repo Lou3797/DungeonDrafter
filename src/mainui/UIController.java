@@ -1,5 +1,7 @@
 package mainui;
 
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -7,10 +9,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import mainui.DELmapeditor.CanvasManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import mainui.popups.newfile.NewFilePopup;
@@ -27,12 +27,9 @@ public class UIController {
     private ArrayList<Pane> mapPanes;
     @FXML private VBox rightPane;
     @FXML private Pane mapPane;
-    @FXML private ColorPicker colorPicker;
     @FXML private ListView<LayerListCell> layersListView;
     @FXML private MenuBar menuBar;
     @FXML private TabPane mapTabPane;
-    @FXML private CanvasManager canvasManager;
-    @FXML private Image selectedTexture;
 
     public UIController() {
         //Before the FXML is loaded
@@ -129,6 +126,8 @@ public class UIController {
                 scrollPane.setContent(pane);
                 pane.setStyle("-fx-background-color: grey");
                 Tab tab = new Tab(controller.getMapName(), scrollPane);
+                tab.setOnSelectionChanged(event -> changeMapFile());
+                //tab.onSelectionChangedProperty().addListener(event -> changeMapFile());
                 mapTabPane.getTabs().add(tab);
                 rightPane.setDisable(false);
                 //layersListView = mapFile.getLayerList();
@@ -139,6 +138,14 @@ public class UIController {
             e.printStackTrace();
         }
 
+    }
+
+    private void changeMapFile() {
+        //int selected = mapTabPane.getSelectionModel().getSelectedIndex();
+        //layersListView = loadedFiles.get(selected).getLayerList();
+
+
+        //layersListView.getItems().setAll(loadedFiles.get(mapTabPane.getSelectionModel().getSelectedIndex()).getLayerList().getItems());
     }
 
 }

@@ -16,6 +16,10 @@
             <MenuItem text="Open"/>
             <MenuItem text="Save"/>
             <MenuItem text="Save As"/>
+            <SeparatorMenuItem/>
+            <MenuItem text="Options"/>
+            <SeparatorMenuItem/>
+            <MenuItem text="Exit"/>
         </Menu>
     </MenuBar>
 
