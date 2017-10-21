@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Map {
-    public static int gridSize;
+    private int gridSize;
     private int width;
     private int height;
     private DrawTool drawTool;
@@ -19,7 +19,7 @@ public class Map {
     }
 
     public Map(int gridSize, int width, int height) {
-        Map.gridSize = gridSize;
+        this.gridSize = gridSize;
         this.width = width;
         this.height = height;
         this.invoker = new Invoker();
@@ -41,5 +41,9 @@ public class Map {
 
     public Layer getSelectedLayer() {
         return this.layers.get(this.selectedLayerIndex);
+    }
+
+    public int getGridSize() {
+        return this.gridSize;
     }
 }

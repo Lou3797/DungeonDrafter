@@ -4,18 +4,20 @@
 A JavaFX based application used for creating Dungeons and Dragons maps utilizing tileable textures, layered canvases and clipping groups.
 
 ### Refactor Goals:
-- [ ] Grid support  
-- [ ] Multiple draw mode support
-- [ ] Grid based draw mode  
-- [ ] Pen based draw mode
+- [x] Grid support  
+- [x] Multiple draw mode support
+- [x] Grid based draw mode  
+- [x] Pen based draw mode
 - [ ] Choose texture for fill  
-- [ ] Multiple layers  
+- [x] Multiple layers
+- [ ] Create layers at will  
 - [ ] Layers manager  
 - [ ] Add top-level effects canvas  
 
 ### Bug Fixing:
 - [ ] Finish command on alt-tab  
 - [ ] Fix command pattern implementation
+- [ ] Drawing w/ shadows shifts canvas
 
 
 ### To-do:
