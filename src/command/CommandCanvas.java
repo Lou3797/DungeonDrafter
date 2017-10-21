@@ -20,8 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.awt.*;
-import java.util.Stack;
+import java.awt.Point;
 
 public class CommandCanvas extends Application {
 
@@ -113,14 +112,12 @@ public class CommandCanvas extends Application {
         gc.setFill(Color.RED);
 
         //Brush mode
-        /*
         layer.addEventHandler(MouseEvent.MOUSE_PRESSED, this::startDraw);
         layer.addEventHandler(MouseEvent.MOUSE_DRAGGED, this::dragDraw);
         layer.addEventHandler(MouseEvent.MOUSE_RELEASED, this::endDraw);
-        */
 
         //Grid Mode
-        layer.addEventHandler(MouseEvent.MOUSE_PRESSED, this::fillGridSquare);
+        /*layer.addEventHandler(MouseEvent.MOUSE_PRESSED, this::fillGridSquare);*/
 
 
         root.getChildren().add(borderPane);

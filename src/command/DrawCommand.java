@@ -10,7 +10,6 @@ import java.awt.*;
 
 public class DrawCommand implements Command {
     private Point upperLeft;
-    private Point bottomRight;
     private Canvas parent;
     private Canvas before;
     private Canvas after;
@@ -19,7 +18,6 @@ public class DrawCommand implements Command {
     public DrawCommand(Point upperLeft, Point bottomRight, Canvas owner, PixelReader snapshotReader) {
         this.parent = owner;
         this.upperLeft = upperLeft;
-        this.bottomRight = bottomRight;
         //this.sp = new SnapshotParameters();
         //this.sp.setFill(Color.TRANSPARENT);
         SnapshotParameters sp = new SnapshotParameters();
