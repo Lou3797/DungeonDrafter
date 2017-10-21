@@ -33,6 +33,7 @@ public class CommandCanvas extends Application {
     private Point lowerRight;
     private PixelReader snapshotReader;
     private Invoker invoker;
+    public static int gridSize;
 
     public static void main(String[] args) {
         launch(args);
@@ -45,7 +46,9 @@ public class CommandCanvas extends Application {
         Group root = new Group();
         int width = 500;
         int height = 450;
+        gridSize = 70;
         layer = new Canvas(width, height);
+
 
         BorderPane borderPane = new BorderPane();
         Pane pane = new Pane();
@@ -109,9 +112,15 @@ public class CommandCanvas extends Application {
         gc = layer.getGraphicsContext2D();
         gc.setFill(Color.RED);
 
+        //Brush mode
+        /*
         layer.addEventHandler(MouseEvent.MOUSE_PRESSED, this::startDraw);
         layer.addEventHandler(MouseEvent.MOUSE_DRAGGED, this::dragDraw);
         layer.addEventHandler(MouseEvent.MOUSE_RELEASED, this::endDraw);
+        */
+
+        //Grid Mode
+        layer.addEventHandler(MouseEvent.MOUSE_PRESSED, this::fillGridSquare);
 
 
         root.getChildren().add(borderPane);
@@ -121,6 +130,10 @@ public class CommandCanvas extends Application {
 
     private void drawOval(MouseEvent event) {
         gc.fillOval(event.getX()-(penSize/2), event.getY()-(penSize/2), penSize, penSize);
+    }
+
+    private void fillGridSquare(MouseEvent event) {
+        gc.fillRect(Math.floor(event.getX()/gridSize)*gridSize,Math.floor(event.getY()/gridSize)*gridSize, gridSize, gridSize);
     }
 
     private void startDraw(MouseEvent event) {
