@@ -59,6 +59,15 @@ public class Window extends Application{
 
         switchLayer(0);
 
+        GridFXLayer gridFX = new GridFXLayer(this.width, this.height, this.map.getGridSize());
+        layersPane.getChildren().add(gridFX.getCanvas());
+        gridFX.getCanvas().setOnMousePressed(event -> drawTool.mousePress(event, this.map.getSelectedLayer()));
+        gridFX.getCanvas().setOnMouseDragged(event -> drawTool.mouseDrag(event, this.map.getSelectedLayer()));
+        gridFX.getCanvas().setOnMouseReleased(event -> drawTool.mouseRelease(event, this.map.getSelectedLayer()));
+
+
+        //gridFX.getCanvas().toFront();
+
         borderPane.setCenter(layersPane);
 
         Menu edit = new Menu("Edit");
@@ -99,6 +108,7 @@ public class Window extends Application{
         MenuItem increaseTool = new MenuItem("Increase Tool Size");
         MenuItem decreaseTool = new MenuItem("Decrease Tool Size");
         CheckMenuItem hideCheck = new CheckMenuItem("Hide");
+        CheckMenuItem gridCheck = new CheckMenuItem("Show Grid");
         MenuItem increaseOpac = new MenuItem("Increase Tool Opacity");
         MenuItem decreaseOpac = new MenuItem("Decrease Tool Opacity");
         shadowsCheck.setOnAction(event -> toggleShadow(shadowsCheck.isSelected()));
@@ -107,15 +117,17 @@ public class Window extends Application{
         decreaseTool.setOnAction(event -> decreaseToolSize());
         increaseOpac.setOnAction(event -> increaseOpacity());
         decreaseOpac.setOnAction(event -> decreaseOpacity());
+        gridCheck.setOnAction(event -> toggleGrid(gridCheck.isSelected(), gridFX));
         shadowsCheck.setAccelerator(new KeyCodeCombination(KeyCode.S));
         hideCheck.setAccelerator(new KeyCodeCombination(KeyCode.H));
         increaseTool.setAccelerator(new KeyCodeCombination(KeyCode.CLOSE_BRACKET));
         decreaseTool.setAccelerator(new KeyCodeCombination(KeyCode.OPEN_BRACKET));
         increaseOpac.setAccelerator(new KeyCodeCombination(KeyCode.EQUALS));
         decreaseOpac.setAccelerator(new KeyCodeCombination(KeyCode.MINUS));
+        gridCheck.setAccelerator(new KeyCodeCombination(KeyCode.T));
 
-        settingsMenu.getItems().addAll(shadowsCheck, hideCheck, increaseTool, decreaseTool, increaseOpac, decreaseOpac);
-
+        settingsMenu.getItems().addAll(shadowsCheck, hideCheck, gridCheck, increaseTool, decreaseTool, increaseOpac, decreaseOpac);
+        toggleGrid(false, gridFX);
 
         MenuBar menuBar = new MenuBar(edit, layersMenu, drawMode, settingsMenu);
         borderPane.setTop(menuBar);
@@ -123,6 +135,10 @@ public class Window extends Application{
         root.getChildren().add(borderPane);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+    }
+
+    private void toggleGrid(boolean selected, GridFXLayer gridFXLayer) {
+        gridFXLayer.setVisible(selected);
     }
 
 
@@ -162,7 +178,7 @@ public class Window extends Application{
 
     private void toggleShadow(boolean selected) {
         if(selected) {
-            this.map.getSelectedLayer().getCanvas().setEffect(new DropShadow(50.0, Color.BLACK));
+            this.map.getSelectedLayer().getCanvas().setEffect(new DropShadow(55.0, Color.BLACK));
         } else {
             this.map.getSelectedLayer().getCanvas().setEffect(null);
         }

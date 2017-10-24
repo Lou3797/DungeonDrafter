@@ -6,7 +6,7 @@ public class PenTool extends DrawTool {
 
     PenTool() {
         super();
-        this.toolSize = 50;
+        this.toolSize = 70;
     }
 
     @Override
@@ -20,10 +20,10 @@ public class PenTool extends DrawTool {
     }
 
     void increaseToolSize() {
-        this.toolSize += 5;
+        this.toolSize += 10;
     }
 
     void decreaseToolSize() {
-        this.toolSize -= 5;
+        this.toolSize -= 10;
     }
 }
