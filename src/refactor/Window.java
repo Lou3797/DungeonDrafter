@@ -1,20 +1,25 @@
 package refactor;
 
 import javafx.application.Application;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import refactor.layer.DrawLayer;
 import refactor.layer.FXLayer;
@@ -22,6 +27,11 @@ import refactor.layer.Layer;
 import refactor.tool.DrawTool;
 import refactor.tool.GridTool;
 import refactor.tool.PenTool;
+
+import javax.imageio.ImageIO;
+import java.awt.image.RenderedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class Window extends Application{
     private Map map; //Only support one map at a time for now
@@ -94,15 +104,18 @@ public class Window extends Application{
         MenuItem layer1MenuItem = new MenuItem("Grass");
         MenuItem layer2MenuItem = new MenuItem("Cave Floor");
         MenuItem layer3MenuItem = new MenuItem("Cave Wall");
-        layersMenu.getItems().addAll(layer0MenuItem, layer1MenuItem, layer2MenuItem, layer3MenuItem);
+        MenuItem layerPrintItem = new MenuItem("Snapshot Layer");
+        layersMenu.getItems().addAll(layer0MenuItem, layer1MenuItem, layer2MenuItem, layer3MenuItem, layerPrintItem);
         layer0MenuItem.setOnAction(event -> switchLayer(0));
         layer1MenuItem.setOnAction(event -> switchLayer(1));
         layer2MenuItem.setOnAction(event -> switchLayer(2));
         layer3MenuItem.setOnAction(event -> switchLayer(3));
+        layerPrintItem.setOnAction(event -> snapshotLayer());
         layer0MenuItem.setAccelerator(new KeyCodeCombination(KeyCode.DIGIT1));
         layer1MenuItem.setAccelerator(new KeyCodeCombination(KeyCode.DIGIT2));
         layer2MenuItem.setAccelerator(new KeyCodeCombination(KeyCode.DIGIT3));
         layer3MenuItem.setAccelerator(new KeyCodeCombination(KeyCode.DIGIT4));
+        layerPrintItem.setAccelerator(new KeyCodeCombination(KeyCode.P));
         Menu settingsMenu = new Menu("Settings");
         CheckMenuItem shadowsCheck = new CheckMenuItem("Shadows");
         MenuItem increaseTool = new MenuItem("Increase Tool Size");
@@ -133,6 +146,21 @@ public class Window extends Application{
         root.getChildren().add(borderPane);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+    }
+
+    private void snapshotLayer() {
+        File file = new File("sample.png");
+        SnapshotParameters temp = new SnapshotParameters();
+        temp.setViewport(new Rectangle2D(300, 300, 300, 300));
+        temp.setFill(Color.TRANSPARENT);
+        WritableImage wi = map.getSelectedLayer().getCanvas().snapshot(temp, null);
+
+        RenderedImage ri = SwingFXUtils.fromFXImage(wi, null);
+        try {
+            ImageIO.write(ri, "png", file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void drawFx(FXLayer fxLayer, MouseEvent event) {

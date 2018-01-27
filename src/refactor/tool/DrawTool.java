@@ -16,8 +16,10 @@ public abstract class DrawTool {
     protected Point current;
     protected Point upperLeft;
     protected Point lowerRight;
+    protected boolean isBlocking;
 
     public DrawTool() {
+        this.isBlocking = false;
         this.sp = new SnapshotParameters();
         this.sp.setFill(Color.TRANSPARENT);
     }

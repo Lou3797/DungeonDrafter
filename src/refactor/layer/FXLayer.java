@@ -24,6 +24,7 @@ public class FXLayer extends Layer {
     }
 
     private void drawGrid() {
+        gridLayer.getGraphicsContext2D().clearRect(0, 0, getParent().getWidth(), getParent().getHeight());
         gridLayer.getGraphicsContext2D().setStroke(Color.BLACK);
         gridLayer.getGraphicsContext2D().setFill(Color.TRANSPARENT);
         for(int x = 1; x < getParent().getWidth()/getParent().getGridSize(); x++) {
