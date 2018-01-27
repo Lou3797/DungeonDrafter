@@ -1,7 +1,7 @@
 package refactor.tool;
 
 import javafx.scene.input.MouseEvent;
-import refactor.Layer;
+import refactor.layer.Layer;
 import refactor.command.DrawCommand;
 
 import java.awt.Point;

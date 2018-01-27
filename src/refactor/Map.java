@@ -1,6 +1,7 @@
 package refactor;
 
 import refactor.command.Invoker;
+import refactor.layer.Layer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,10 @@ public class Map {
 
     public Map() {
         this(70, 700, 560);
+    }
+
+    public Map(int width, int height) {
+        this(70, width, height);
     }
 
     public Map(int gridSize, int width, int height) {
@@ -44,5 +49,13 @@ public class Map {
 
     public int getGridSize() {
         return this.gridSize;
+    }
+
+    public int getWidth() {
+        return this.width;
+    }
+
+    public int getHeight() {
+        return this.height;
     }
 }

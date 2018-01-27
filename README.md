@@ -18,9 +18,11 @@ A JavaFX based application used for creating Dungeons and Dragons maps utilizing
 - [ ] Finish command on alt-tab  
 - [ ] Fix command pattern implementation
 - [ ] Drawing w/ shadows shifts canvas
+- [ ] Drawing on a hidden layer deletes what is beneath it
 
 
 ### To-do:
+- [ ] Reimplement Command Pattern
 - [ ] Implement dropshadow on boundary  
 - [ ] Improve mainui with more logically placed tabs  
 - [ ] Implement image dragging  

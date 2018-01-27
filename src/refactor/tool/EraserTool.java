@@ -2,7 +2,7 @@ package refactor.tool;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import refactor.Layer;
+import refactor.layer.Layer;
 import refactor.command.DrawCommand;
 
 public class EraserTool extends PenTool {

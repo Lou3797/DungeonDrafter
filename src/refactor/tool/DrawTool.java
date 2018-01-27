@@ -4,7 +4,7 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.image.PixelReader;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import refactor.Layer;
+import refactor.layer.Layer;
 
 import java.awt.Point;
 

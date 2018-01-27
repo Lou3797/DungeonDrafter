@@ -15,7 +15,9 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import refactor.command.ShadowEffectCommand;
+import refactor.layer.DrawLayer;
+import refactor.layer.GridLineLayer;
+import refactor.layer.Layer;
 import refactor.tool.DrawTool;
 import refactor.tool.GridTool;
 import refactor.tool.PenTool;
@@ -33,7 +35,7 @@ public class Window extends Application{
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("RE:Dungeon Drafter <Final Mix>");
+        primaryStage.setTitle("re:Dungeon Drafter <Final Mix>");
         Group root = new Group();
         this.width = 1260;
         this.height = 840;
@@ -49,7 +51,7 @@ public class Window extends Application{
 
         switchLayer(0);
 
-        GridLineLayer gridFX = new GridLineLayer(this.width, this.height, this.map.getGridSize());
+        GridLineLayer gridFX = new GridLineLayer(this.width, this.height, this.map);
         this.layersPane.getChildren().add(gridFX.getCanvas());
         gridFX.getCanvas().setOnMousePressed(event -> this.drawTool.mousePress(event, this.map.getSelectedLayer()));
         gridFX.getCanvas().setOnMouseDragged(event -> this.drawTool.mouseDrag(event, this.map.getSelectedLayer()));
@@ -128,7 +130,7 @@ public class Window extends Application{
 
 
     private void addLayer(String name, Image image) {
-        Layer temp = new Layer(this.width, this.height, name, this.map, image);
+        Layer temp = new DrawLayer(this.width, this.height, name, this.map, image);
         temp.getCanvas().setOnMousePressed(event -> drawTool.mousePress(event, this.map.getSelectedLayer()));
         temp.getCanvas().setOnMouseDragged(event -> drawTool.mouseDrag(event, this.map.getSelectedLayer()));
         temp.getCanvas().setOnMouseReleased(event -> drawTool.mouseRelease(event, this.map.getSelectedLayer()));
@@ -161,7 +163,7 @@ public class Window extends Application{
     }
 
     private void toggleShadow(boolean selected) {
-        this.map.getInvoker().invoke(new ShadowEffectCommand(this.map.getSelectedLayer().getCanvas(), 55.0));
+        //this.map.getInvoker().invoke(new ShadowEffectCommand(this.map.getSelectedLayer().getCanvas(), 55.0));
         if(selected) {
             //this.map.getSelectedLayer().getCanvas().setEffect(new DropShadow(55.0, Color.BLACK));
         } else {
