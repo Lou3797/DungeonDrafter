@@ -15,7 +15,6 @@ public class PenTool extends DrawTool {
     @Override
     public void mergeScratchLayer(Rectangle2D bounds, Layer scratchLayer, Layer drawLayer) {
         drawLayer.getParent().getInvoker().invoke(new DrawCommand(bounds, drawLayer.getCanvas(), scratchLayer.getCanvas()));
-
         scratchLayer.getCanvas().getGraphicsContext2D().clearRect(bounds.getMinX(), bounds.getMinY(),
                 bounds.getMaxX() - bounds.getMinX(), bounds.getMaxY() - bounds.getMinY());
     }

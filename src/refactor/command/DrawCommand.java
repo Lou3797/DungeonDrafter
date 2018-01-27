@@ -3,7 +3,6 @@ package refactor.command;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.effect.BlendMode;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
@@ -36,7 +35,8 @@ public class DrawCommand implements Command {
     }
 
     private boolean overwriteParentCanvas(WritableImage overwrite) {
-        parent.setBlendMode(BlendMode.ADD);
+        //parent.setBlendMode(BlendMode.SRC_OVER);
+        //parent.getGraphicsContext2D().clearRect(bounds.getMinX(), bounds.getMinY(), bounds.getWidth(), bounds.getHeight());
         parent.getGraphicsContext2D().drawImage(overwrite, bounds.getMinX(), bounds.getMinY());
         return true;
 
