@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 import refactor.layer.DrawLayer;
 import refactor.layer.FXLayer;
 import refactor.layer.Layer;
+import refactor.layer.ScratchLayer;
 import refactor.tool.DrawTool;
 import refactor.tool.GridTool;
 import refactor.tool.PenTool;
@@ -53,12 +54,16 @@ public class Window extends Application{
         this.drawTool = new PenTool();
         this.map = new Map(70, this.width, this.height); //BAD!! Change so Window w,h and Map w,h can be different!
 
+        Layer scratch = new ScratchLayer(this.width, this.height, this.map);
+
         BorderPane borderPane = new BorderPane();
         this.layersPane = new Pane();
         addLayer("Layer 0", new Image("img/textures/drt1.jpg"));
         addLayer("Layer 1", new Image("img/textures/grs1.jpg"));
         addLayer("Layer 2", new Image("img/textures/cw1.jpg"));
         addLayer("Layer 3", new Image("img/textures/cw2.jpg"));
+
+        this.layersPane.getChildren().add(scratch.getCanvas());
 
         switchLayer(0);
 
@@ -67,12 +72,12 @@ public class Window extends Application{
         fxLayer.getCanvas().setOnMouseMoved(event -> {
             drawFx(fxLayer, event);
         });
-        fxLayer.getCanvas().setOnMousePressed(event -> this.drawTool.mousePress(event, this.map.getSelectedLayer()));
+        fxLayer.getCanvas().setOnMousePressed(event -> this.drawTool.mousePress(event, scratch));
         fxLayer.getCanvas().setOnMouseDragged(event -> {
             drawFx(fxLayer, event);
-            this.drawTool.mouseDrag(event, this.map.getSelectedLayer());
+            this.drawTool.mouseDrag(event, scratch);
         });
-        fxLayer.getCanvas().setOnMouseReleased(event -> this.drawTool.mouseRelease(event, this.map.getSelectedLayer()));
+        fxLayer.getCanvas().setOnMouseReleased(event -> this.drawTool.mouseRelease(event, scratch, map.getSelectedLayer()));
 
         this.layersPane.getChildren().add(fxLayer.getGridLayer());
         this.layersPane.getChildren().add(fxLayer.getCanvas());
@@ -161,6 +166,9 @@ public class Window extends Application{
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+
     }
 
     private void drawFx(FXLayer fxLayer, MouseEvent event) {
@@ -175,9 +183,9 @@ public class Window extends Application{
 
     private void addLayer(String name, Image image) {
         Layer temp = new DrawLayer(this.width, this.height, name, this.map, image);
-        temp.getCanvas().setOnMousePressed(event -> drawTool.mousePress(event, this.map.getSelectedLayer()));
+        /*temp.getCanvas().setOnMousePressed(event -> drawTool.mousePress(event, this.map.getSelectedLayer()));
         temp.getCanvas().setOnMouseDragged(event -> drawTool.mouseDrag(event, this.map.getSelectedLayer()));
-        temp.getCanvas().setOnMouseReleased(event -> drawTool.mouseRelease(event, this.map.getSelectedLayer()));
+        temp.getCanvas().setOnMouseReleased(event -> drawTool.mouseRelease(event, this.map.getSelectedLayer()));*/
         this.map.addLayer(temp);
         this.layersPane.getChildren().add(temp.getCanvas());
     }

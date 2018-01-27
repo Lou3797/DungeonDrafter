@@ -1,11 +1,6 @@
 package refactor.tool;
 
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import refactor.layer.Layer;
-import refactor.command.DrawCommand;
-
-public class EraserTool extends PenTool {
+/*public class EraserTool extends PenTool {
     public EraserTool() {
         super();
     }
@@ -21,4 +16,4 @@ public class EraserTool extends PenTool {
         layer.getCanvas().getGraphicsContext2D().fillOval(event.getX()-(toolSize/2), event.getY()-(toolSize/2), toolSize, toolSize);
     }
 
-}
+}*/

@@ -1,11 +1,9 @@
 package refactor.tool;
 
+import javafx.geometry.Rectangle2D;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import refactor.layer.Layer;
-import refactor.command.DrawCommand;
-
-import java.awt.Point;
 
 public class GridTool extends DrawTool {
 
@@ -15,11 +13,7 @@ public class GridTool extends DrawTool {
     }
 
     @Override
-    public void invokeCommand(Layer layer) {
-        int gridSize = layer.getParent().getGridSize();
-        Point topLeft = new Point((int)Math.floor(upperLeft.getX()/gridSize)*gridSize,(int)Math.floor(upperLeft.getY()/gridSize)*gridSize);
-        Point bottomRight = new Point((int)Math.ceil(lowerRight.getX()/gridSize)*gridSize,(int)Math.ceil(lowerRight.getY()/gridSize)*gridSize);
-        layer.getParent().getInvoker().invoke(new DrawCommand(topLeft, bottomRight, layer.getCanvas(), snapshotReader));
+    public void mergeScratchLayer(Rectangle2D bounds, Layer scratchLayer, Layer drawLayer) {
 
     }
 
