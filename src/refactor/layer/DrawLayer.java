@@ -7,13 +7,9 @@ import refactor.Map;
 public class DrawLayer extends Layer {
     private ImagePattern texture;
 
-    /*public DrawLayer(int width, int height, Map parent) {
-        super(width, height, parent);
+    public DrawLayer(int width, int height, Map parent, Image image) {
+        this(width, height, "New DrawLayer", parent, image);
     }
-
-    public DrawLayer(int width, int height, String name, Map parent) {
-        super(width, height, name, parent);
-    }*/
 
     public DrawLayer(int width, int height, String name, Map parent, Image image) {
         super(width, height, name, parent);

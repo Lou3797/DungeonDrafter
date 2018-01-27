@@ -12,11 +12,12 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import refactor.layer.DrawLayer;
-import refactor.layer.GridLineLayer;
+import refactor.layer.FXLayer;
 import refactor.layer.Layer;
 import refactor.tool.DrawTool;
 import refactor.tool.GridTool;
@@ -51,12 +52,22 @@ public class Window extends Application{
 
         switchLayer(0);
 
-        GridLineLayer gridFX = new GridLineLayer(this.width, this.height, this.map);
-        this.layersPane.getChildren().add(gridFX.getCanvas());
-        gridFX.getCanvas().setOnMousePressed(event -> this.drawTool.mousePress(event, this.map.getSelectedLayer()));
-        gridFX.getCanvas().setOnMouseDragged(event -> this.drawTool.mouseDrag(event, this.map.getSelectedLayer()));
-        gridFX.getCanvas().setOnMouseReleased(event -> this.drawTool.mouseRelease(event, this.map.getSelectedLayer()));
-        gridFX.getCanvas().toFront();
+        FXLayer fxLayer = new FXLayer(this.width, this.height, this.map);
+
+        fxLayer.getCanvas().setOnMouseMoved(event -> {
+            drawFx(fxLayer, event);
+        });
+        fxLayer.getCanvas().setOnMousePressed(event -> this.drawTool.mousePress(event, this.map.getSelectedLayer()));
+        fxLayer.getCanvas().setOnMouseDragged(event -> {
+            drawFx(fxLayer, event);
+            this.drawTool.mouseDrag(event, this.map.getSelectedLayer());
+        });
+        fxLayer.getCanvas().setOnMouseReleased(event -> this.drawTool.mouseRelease(event, this.map.getSelectedLayer()));
+
+        this.layersPane.getChildren().add(fxLayer.getGridLayer());
+        this.layersPane.getChildren().add(fxLayer.getCanvas());
+        fxLayer.getCanvas().toFront();
+
         borderPane.setCenter(layersPane);
 
         /*
@@ -106,7 +117,7 @@ public class Window extends Application{
         decreaseTool.setOnAction(event -> decreaseToolSize());
         increaseOpac.setOnAction(event -> increaseOpacity());
         decreaseOpac.setOnAction(event -> decreaseOpacity());
-        gridCheck.setOnAction(event -> toggleGrid(gridCheck.isSelected(), gridFX));
+        //gridCheck.setOnAction(event -> toggleGrid(gridCheck.isSelected(), gridFX));
         shadowsCheck.setAccelerator(new KeyCodeCombination(KeyCode.S));
         hideCheck.setAccelerator(new KeyCodeCombination(KeyCode.H));
         increaseTool.setAccelerator(new KeyCodeCombination(KeyCode.CLOSE_BRACKET));
@@ -115,7 +126,7 @@ public class Window extends Application{
         decreaseOpac.setAccelerator(new KeyCodeCombination(KeyCode.MINUS));
         gridCheck.setAccelerator(new KeyCodeCombination(KeyCode.T));
         settingsMenu.getItems().addAll(shadowsCheck, hideCheck, gridCheck, increaseTool, decreaseTool, increaseOpac, decreaseOpac);
-        toggleGrid(false, gridFX);
+        //toggleGrid(false, gridFX);
         MenuBar menuBar = new MenuBar(edit, layersMenu, drawMode, settingsMenu);
         borderPane.setTop(menuBar);
 
@@ -124,8 +135,13 @@ public class Window extends Application{
         primaryStage.show();
     }
 
-    private void toggleGrid(boolean selected, GridLineLayer gridLineLayer) {
-        gridLineLayer.setVisible(selected);
+    private void drawFx(FXLayer fxLayer, MouseEvent event) {
+        fxLayer.getCanvas().getGraphicsContext2D().clearRect(0, 0, this.width, this.height);
+        this.drawTool.drawFX(event, fxLayer);
+    }
+
+    private void toggleGrid(boolean selected) {
+        //setVisible(selected);
     }
 
 

@@ -1,8 +1,8 @@
 package refactor.tool;
 
 import javafx.scene.input.MouseEvent;
-import refactor.layer.Layer;
 import refactor.command.DrawCommand;
+import refactor.layer.Layer;
 
 public class PenTool extends DrawTool {
 
@@ -18,7 +18,7 @@ public class PenTool extends DrawTool {
 
     @Override
     public void drawStep(MouseEvent event, Layer layer) {
-        layer.getCanvas().getGraphicsContext2D().fillOval(event.getX()-(toolSize/2), event.getY()-(toolSize/2), toolSize, toolSize);
+        layer.getCanvas().getGraphicsContext2D().fillOval(getFillPoint(event).getX(), getFillPoint(event).getY(), toolSize, toolSize);
     }
 
     public void increaseToolSize() {

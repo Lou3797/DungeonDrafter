@@ -4,9 +4,10 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.image.PixelReader;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.ArcType;
 import refactor.layer.Layer;
 
-import java.awt.Point;
+import java.awt.*;
 
 public abstract class DrawTool {
     protected int toolSize;
@@ -69,5 +70,20 @@ public abstract class DrawTool {
     abstract public void invokeCommand(Layer layer);
 
     abstract public void drawStep(MouseEvent event, Layer layer);
+
+    protected Point getFillPoint(MouseEvent event) {
+        return new Point((int) event.getX()-(toolSize/2), (int) event.getY()-(toolSize/2));
+    }
+
+    public void drawFX(MouseEvent event, Layer fxLayer) {
+        /*fxLayer.getCanvas().getGraphicsContext2D().setGlobalBlendMode(BlendMode.ADD);
+        fxLayer.getCanvas().getGraphicsContext2D().setFill(Color.BLACK);
+        fxLayer.getCanvas().getGraphicsContext2D().fillOval(getFillPoint(event).getX(), getFillPoint(event).getY(), toolSize, toolSize);
+        fxLayer.getCanvas().getGraphicsContext2D().setFill(Color.WHITE);
+        fxLayer.getCanvas().getGraphicsContext2D().fillOval(getFillPoint(event).getX() + 1, getFillPoint(event).getY() + 1, toolSize - 2, toolSize - 2);*/
+
+        fxLayer.getCanvas().getGraphicsContext2D().setStroke(Color.BLACK);
+        fxLayer.getCanvas().getGraphicsContext2D().strokeArc(getFillPoint(event).getX(), getFillPoint(event).getY(), toolSize, toolSize, 0, 360, ArcType.OPEN);
+    }
 
 }

@@ -1,6 +1,7 @@
 package refactor.tool;
 
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import refactor.layer.Layer;
 import refactor.command.DrawCommand;
 
@@ -27,4 +28,13 @@ public class GridTool extends DrawTool {
         int gridSize = layer.getParent().getGridSize();
         layer.getCanvas().getGraphicsContext2D().fillRect(Math.floor(event.getX()/gridSize)*gridSize,Math.floor(event.getY()/gridSize)*gridSize, gridSize, gridSize);
     }
+
+    @Override
+    public void drawFX(MouseEvent event, Layer fxLayer) {
+        fxLayer.getCanvas().getGraphicsContext2D().setFill(Color.BLACK);
+        fxLayer.getCanvas().getGraphicsContext2D().fillRect((int)(event.getX() / fxLayer.getParent().getGridSize()) * fxLayer.getParent().getGridSize(),
+                (int)(event.getY() / fxLayer.getParent().getGridSize()) * fxLayer.getParent().getGridSize(),
+                fxLayer.getParent().getGridSize(), fxLayer.getParent().getGridSize());
+    }
+
 }

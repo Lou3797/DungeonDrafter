@@ -9,9 +9,7 @@ public abstract class Layer {
     private Map parent;
 
     Layer(int width, int height, Map parent) {
-        this.canvas = new Canvas(width, height);
-        this.name = "Temp";
-        this.parent = parent;
+        this(width, height, "New Layer of unknown type", parent);
     }
 
     Layer(int width, int height, String name, Map parent) {
