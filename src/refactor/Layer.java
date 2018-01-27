@@ -7,7 +7,6 @@ import javafx.scene.paint.ImagePattern;
 public class Layer {
     private Canvas canvas;
     private String name;
-    private Invoker invoker;
     private Map parent;
     private ImagePattern texture;
 
@@ -21,17 +20,15 @@ public class Layer {
         this.canvas = new Canvas(width, height);
         this.name = name;
         this.parent = parent;
-        //this.canvas.setOnMouseClicked( event -> System.out.println("Clicked on " + this.name)); //Delete later
     }
 
     Layer(int width, int height, String name, Map parent, Image image) {
         this.canvas = new Canvas(width, height);
         this.name = name;
         this.parent = parent;
-        //this.canvas.setOnMouseClicked( event -> System.out.println("Clicked on " + this.name)); //Delete later
         this.texture = new ImagePattern(image, 0, 0, image.getWidth(), image.getHeight(), false);
-        this.canvas.getGraphicsContext2D().setFill(texture);
-        this.canvas.getGraphicsContext2D().setStroke(texture);
+        this.canvas.getGraphicsContext2D().setFill(this.texture);
+        this.canvas.getGraphicsContext2D().setStroke(this.texture);
     }
 
     public Canvas getCanvas() {
@@ -46,6 +43,10 @@ public class Layer {
         return this.parent;
     }
 
+    public void resetTextureFill() {
+        this.canvas.getGraphicsContext2D().setFill(this.texture);
+        this.canvas.getGraphicsContext2D().setStroke(this.texture);
+    }
 
 
 }

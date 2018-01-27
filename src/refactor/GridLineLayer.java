@@ -1,16 +1,15 @@
 package refactor;
 
-import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
-public class GridFXLayer {
+public class GridLineLayer {
     private Canvas canvas;
     private int width;
     private int height;
     private int gridSize;
 
-    public GridFXLayer(int width, int height, int gridSize) {
+    public GridLineLayer(int width, int height, int gridSize) {
         this.canvas = new Canvas(width, height);
         this.width = width;
         this.height = height;

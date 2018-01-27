@@ -2,24 +2,23 @@ package refactor;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import refactor.command.ShadowEffectCommand;
+import refactor.tool.DrawTool;
+import refactor.tool.GridTool;
+import refactor.tool.PenTool;
 
 public class Window extends Application{
     private Map map; //Only support one map at a time for now
@@ -39,19 +38,10 @@ public class Window extends Application{
         this.width = 1260;
         this.height = 840;
         this.drawTool = new PenTool();
-        this.map = new Map(70, width, height); //BAD!! Change so Window w,h and Map w,h can be different!
+        this.map = new Map(70, this.width, this.height); //BAD!! Change so Window w,h and Map w,h can be different!
 
         BorderPane borderPane = new BorderPane();
         this.layersPane = new Pane();
-        /*
-        Layer layer1 = new Layer(width, height, "Layer 1");
-        Layer layer2 = new Layer(width, height, "Layer 2");
-        Layer layer3 = new Layer(width, height, "Layer 3");
-        this.map.addLayer(layer1);
-        this.map.addLayer(layer2);
-        this.map.addLayer(layer3);
-        this.layersPane.getChildren().addAll(layer1.getCanvas(), layer2.getCanvas(), layer3.getCanvas());
-        */
         addLayer("Layer 0", new Image("img/textures/drt1.jpg"));
         addLayer("Layer 1", new Image("img/textures/grs1.jpg"));
         addLayer("Layer 2", new Image("img/textures/cw1.jpg"));
@@ -59,17 +49,17 @@ public class Window extends Application{
 
         switchLayer(0);
 
-        GridFXLayer gridFX = new GridFXLayer(this.width, this.height, this.map.getGridSize());
-        layersPane.getChildren().add(gridFX.getCanvas());
-        gridFX.getCanvas().setOnMousePressed(event -> drawTool.mousePress(event, this.map.getSelectedLayer()));
-        gridFX.getCanvas().setOnMouseDragged(event -> drawTool.mouseDrag(event, this.map.getSelectedLayer()));
-        gridFX.getCanvas().setOnMouseReleased(event -> drawTool.mouseRelease(event, this.map.getSelectedLayer()));
-
-
-        //gridFX.getCanvas().toFront();
-
+        GridLineLayer gridFX = new GridLineLayer(this.width, this.height, this.map.getGridSize());
+        this.layersPane.getChildren().add(gridFX.getCanvas());
+        gridFX.getCanvas().setOnMousePressed(event -> this.drawTool.mousePress(event, this.map.getSelectedLayer()));
+        gridFX.getCanvas().setOnMouseDragged(event -> this.drawTool.mouseDrag(event, this.map.getSelectedLayer()));
+        gridFX.getCanvas().setOnMouseReleased(event -> this.drawTool.mouseRelease(event, this.map.getSelectedLayer()));
+        gridFX.getCanvas().toFront();
         borderPane.setCenter(layersPane);
 
+        /*
+         *  The following is pure menu bar code. All temporary, could use helper methods
+         */
         Menu edit = new Menu("Edit");
         MenuItem undo = new MenuItem("Undo");
         MenuItem redo = new MenuItem("Redo");
@@ -78,7 +68,6 @@ public class Window extends Application{
         redo.setOnAction(this::redo);
         undo.setAccelerator(new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN));
         redo.setAccelerator(new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN));
-
         Menu drawMode = new Menu("Draw Mode");
         MenuItem gridDrawMode = new MenuItem("Grid Mode");
         MenuItem penDrawMode = new MenuItem("Pen Mode");
@@ -87,7 +76,6 @@ public class Window extends Application{
         drawMode.getItems().addAll(gridDrawMode, penDrawMode);
         gridDrawMode.setOnAction(event -> setDrawTool(new GridTool()));
         penDrawMode.setOnAction(event -> setDrawTool(new PenTool()));
-
         Menu layersMenu = new Menu("Layer");
         MenuItem layer0MenuItem = new MenuItem("Dirt");
         MenuItem layer1MenuItem = new MenuItem("Grass");
@@ -102,7 +90,6 @@ public class Window extends Application{
         layer1MenuItem.setAccelerator(new KeyCodeCombination(KeyCode.DIGIT2));
         layer2MenuItem.setAccelerator(new KeyCodeCombination(KeyCode.DIGIT3));
         layer3MenuItem.setAccelerator(new KeyCodeCombination(KeyCode.DIGIT4));
-
         Menu settingsMenu = new Menu("Settings");
         CheckMenuItem shadowsCheck = new CheckMenuItem("Shadows");
         MenuItem increaseTool = new MenuItem("Increase Tool Size");
@@ -125,10 +112,8 @@ public class Window extends Application{
         increaseOpac.setAccelerator(new KeyCodeCombination(KeyCode.EQUALS));
         decreaseOpac.setAccelerator(new KeyCodeCombination(KeyCode.MINUS));
         gridCheck.setAccelerator(new KeyCodeCombination(KeyCode.T));
-
         settingsMenu.getItems().addAll(shadowsCheck, hideCheck, gridCheck, increaseTool, decreaseTool, increaseOpac, decreaseOpac);
         toggleGrid(false, gridFX);
-
         MenuBar menuBar = new MenuBar(edit, layersMenu, drawMode, settingsMenu);
         borderPane.setTop(menuBar);
 
@@ -137,8 +122,8 @@ public class Window extends Application{
         primaryStage.show();
     }
 
-    private void toggleGrid(boolean selected, GridFXLayer gridFXLayer) {
-        gridFXLayer.setVisible(selected);
+    private void toggleGrid(boolean selected, GridLineLayer gridLineLayer) {
+        gridLineLayer.setVisible(selected);
     }
 
 
@@ -152,20 +137,19 @@ public class Window extends Application{
     }
 
     private void undo(ActionEvent event) {
-        map.getInvoker().undo();
+        this.map.getInvoker().undo();
     }
 
     private void redo(ActionEvent event) {
-        map.getInvoker().redo();
+        this.map.getInvoker().redo();
     }
 
     private void setDrawTool(DrawTool tool) {
-        drawTool = tool;
+        this.drawTool = tool;
     }
 
     private void switchLayer(int index) {
         this.map.setSelectedLayer(index);
-        //this.map.getSelectedLayer().getCanvas().toFront(); //This is used to manipulate draw order
     }
 
     private void toggleHide(boolean selected) {
@@ -177,10 +161,11 @@ public class Window extends Application{
     }
 
     private void toggleShadow(boolean selected) {
+        this.map.getInvoker().invoke(new ShadowEffectCommand(this.map.getSelectedLayer().getCanvas(), 55.0));
         if(selected) {
-            this.map.getSelectedLayer().getCanvas().setEffect(new DropShadow(55.0, Color.BLACK));
+            //this.map.getSelectedLayer().getCanvas().setEffect(new DropShadow(55.0, Color.BLACK));
         } else {
-            this.map.getSelectedLayer().getCanvas().setEffect(null);
+            //this.map.getSelectedLayer().getCanvas().setEffect(null);
         }
     }
 
@@ -201,7 +186,6 @@ public class Window extends Application{
         if(this.map.getSelectedLayer().getCanvas().getGraphicsContext2D().getGlobalAlpha() > 1) {
             this.map.getSelectedLayer().getCanvas().getGraphicsContext2D().setGlobalAlpha(1);
         }
-        //System.out.println(this.map.getSelectedLayer().getCanvas().getGraphicsContext2D().getGlobalAlpha());
     }
 
     private void decreaseOpacity() {
@@ -209,7 +193,6 @@ public class Window extends Application{
         if(this.map.getSelectedLayer().getCanvas().getGraphicsContext2D().getGlobalAlpha() < 0) {
             this.map.getSelectedLayer().getCanvas().getGraphicsContext2D().setGlobalAlpha(0);
         }
-        //System.out.println(this.map.getSelectedLayer().getCanvas().getGraphicsContext2D().getGlobalAlpha());
     }
 
 

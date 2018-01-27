@@ -1,4 +1,4 @@
-package refactor;
+package refactor.command;
 
 public interface Command {
 

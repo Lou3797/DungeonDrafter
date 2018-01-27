@@ -1,6 +1,6 @@
 package refactor;
 
-import javafx.scene.canvas.Canvas;
+import refactor.command.Invoker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,6 @@ public class Map {
     private int gridSize;
     private int width;
     private int height;
-    private DrawTool drawTool;
     private Invoker invoker;
     private List<Layer> layers; //{0,n} {Bottom, Top}
     private int selectedLayerIndex;
@@ -36,7 +35,7 @@ public class Map {
     }
 
     public void setSelectedLayer(int index) {
-        selectedLayerIndex = index;
+        this.selectedLayerIndex = index;
     }
 
     public Layer getSelectedLayer() {

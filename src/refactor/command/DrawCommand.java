@@ -1,4 +1,4 @@
-package refactor;
+package refactor.command;
 
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
@@ -13,13 +13,10 @@ public class DrawCommand implements Command {
     private Canvas parent;
     private Canvas before;
     private Canvas after;
-    //private SnapshotParameters sp;
 
     public DrawCommand(Point upperLeft, Point bottomRight, Canvas owner, PixelReader snapshotReader) {
         this.parent = owner;
         this.upperLeft = upperLeft;
-        //this.sp = new SnapshotParameters();
-        //this.sp.setFill(Color.TRANSPARENT);
         SnapshotParameters sp = new SnapshotParameters();
         sp.setFill(Color.TRANSPARENT);
         before = new Canvas(bottomRight.getX() - upperLeft.getX(), bottomRight.getY() - upperLeft.getY());

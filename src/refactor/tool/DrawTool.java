@@ -1,9 +1,10 @@
-package refactor;
+package refactor.tool;
 
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.PixelReader;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import refactor.Layer;
 
 import java.awt.Point;
 
@@ -15,12 +16,12 @@ public abstract class DrawTool {
     protected Point upperLeft;
     protected Point lowerRight;
 
-    DrawTool() {
+    public DrawTool() {
         this.sp = new SnapshotParameters();
         this.sp.setFill(Color.TRANSPARENT);
     }
 
-    void mousePress(MouseEvent event, Layer layer) {
+    public void mousePress(MouseEvent event, Layer layer) {
         snapshotReader = layer.getCanvas().snapshot(sp, null).getPixelReader();
         current = new Point((int)event.getX(), (int)event.getY());
         upperLeft = new Point(current.getX() - toolSize < 0 ? 0 : (int)current.getX() - toolSize, current.getY() - toolSize < 0 ? 0 : (int)current.getY() - toolSize);
@@ -28,7 +29,7 @@ public abstract class DrawTool {
         drawStep(event, layer);
     }
 
-    void mouseDrag(MouseEvent event, Layer layer) {
+    public void mouseDrag(MouseEvent event, Layer layer) {
         current = new Point((int)event.getX(), (int)event.getY());
         if(current.getX() - toolSize < upperLeft.getX()) {
             if(current.getX() - toolSize < 0) {
@@ -60,13 +61,13 @@ public abstract class DrawTool {
         drawStep(event, layer);
     }
 
-    void mouseRelease(MouseEvent event, Layer layer) {
+    public void mouseRelease(MouseEvent event, Layer layer) {
         drawStep(event, layer);
         invokeCommand(layer);
     }
 
-    abstract void invokeCommand(Layer layer);
+    abstract public void invokeCommand(Layer layer);
 
-    abstract void drawStep(MouseEvent event, Layer layer);
+    abstract public void drawStep(MouseEvent event, Layer layer);
 
 }
