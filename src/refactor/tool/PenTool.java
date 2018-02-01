@@ -29,6 +29,6 @@ public class PenTool extends DrawTool {
     }
 
     public void decreaseToolSize() {
-        this.toolSize -= 10;
+        this.toolSize = this.toolSize - 10 < 1 ? 1 : this.toolSize - 10;
     }
 }

@@ -48,6 +48,8 @@ public abstract class DrawTool {
             }
         }
 
+        //minX = minX < 0 ? 0 : minX;
+        //minY = minY < 0 ? 0 : minY;
         bounds = new Rectangle2D(minX, minY, maxX - minX, maxY - minY);
         //System.out.println(bounds);
 
