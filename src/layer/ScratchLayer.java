@@ -1,6 +1,6 @@
-package refactor.layer;
+package layer;
 
-import refactor.Map;
+import map.Map;
 
 public class ScratchLayer extends Layer {
 

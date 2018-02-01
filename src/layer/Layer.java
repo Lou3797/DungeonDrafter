@@ -1,7 +1,7 @@
-package refactor.layer;
+package layer;
 
 import javafx.scene.canvas.Canvas;
-import refactor.Map;
+import map.Map;
 
 public abstract class Layer {
     private Canvas canvas;

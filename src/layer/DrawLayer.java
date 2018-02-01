@@ -1,8 +1,8 @@
-package refactor.layer;
+package layer;
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
-import refactor.Map;
+import map.Map;
 
 public class DrawLayer extends Layer {
     private ImagePattern texture;

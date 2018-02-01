@@ -1,7 +1,7 @@
-package refactor;
+package map;
 
-import refactor.command.Invoker;
-import refactor.layer.Layer;
+import command.Invoker;
+import layer.Layer;
 
 import java.util.ArrayList;
 import java.util.List;

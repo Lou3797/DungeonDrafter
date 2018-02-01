@@ -1,8 +1,8 @@
-package refactor.layer;
+package layer;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
-import refactor.Map;
+import map.Map;
 
 public class FXLayer extends Layer {
     private Canvas gridLayer;

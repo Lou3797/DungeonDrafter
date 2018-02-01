@@ -1,11 +1,11 @@
-package refactor.tool;
+package tool;
 
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
-import refactor.layer.Layer;
+import layer.Layer;
 
 public abstract class DrawTool {
     protected int toolSize;

@@ -1,4 +1,4 @@
-package refactor.tool;
+package tool;
 
 /*public class EraserTool extends PenTool {
     public EraserTool() {

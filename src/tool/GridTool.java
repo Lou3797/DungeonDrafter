@@ -1,9 +1,9 @@
-package refactor.tool;
+package tool;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import refactor.layer.Layer;
+import layer.Layer;
 
 public class GridTool extends DrawTool {
 

@@ -1,4 +1,4 @@
-package refactor.command;
+package command;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.SnapshotParameters;

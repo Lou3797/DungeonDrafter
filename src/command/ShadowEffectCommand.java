@@ -1,4 +1,4 @@
-package refactor.command;
+package command;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.effect.DropShadow;

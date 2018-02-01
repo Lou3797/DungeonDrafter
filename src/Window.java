@@ -1,5 +1,3 @@
-package refactor;
-
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -21,13 +19,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import refactor.layer.DrawLayer;
-import refactor.layer.FXLayer;
-import refactor.layer.Layer;
-import refactor.layer.ScratchLayer;
-import refactor.tool.DrawTool;
-import refactor.tool.GridTool;
-import refactor.tool.PenTool;
+import layer.DrawLayer;
+import layer.FXLayer;
+import layer.Layer;
+import layer.ScratchLayer;
+import map.Map;
+import tool.DrawTool;
+import tool.GridTool;
+import tool.PenTool;
 
 import javax.imageio.ImageIO;
 import java.awt.image.RenderedImage;

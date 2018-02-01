@@ -1,9 +1,9 @@
-package refactor.tool;
+package tool;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.input.MouseEvent;
-import refactor.command.DrawCommand;
-import refactor.layer.Layer;
+import command.DrawCommand;
+import layer.Layer;
 
 public class PenTool extends DrawTool {
 
