@@ -44,28 +44,16 @@ public class BrushTool extends PenTool {
     }
 
     private void comparePoints(MouseEvent event) {
-        if(event.getX() < min.getX()) {
-            min = new Point2D(event.getX(), min.getY());
-        } else if(event.getX() > max.getX()) {
-            max = new Point2D(event.getX(), max.getY());
+        if(event.getX()-this.brushSize < min.getX()) {
+            min = new Point2D(event.getX()-this.brushSize, min.getY());
+        } else if(event.getX()+this.brushSize > max.getX()) {
+            max = new Point2D(event.getX()+this.brushSize, max.getY());
         }
 
-        if(event.getY() < min.getY()) {
-            min = new Point2D(min.getX(), event.getY());
-        } else if (event.getY() > max.getY()) {
-            max = new Point2D(max.getX(), event.getY());
-        }
-    }
-
-    private void updateViewPort(MouseEvent event) {
-        if(viewPort == null) {
-            viewPort = new Rectangle2D(event.getX()-this.brushSize, event.getY()-this.brushSize,
-                    event.getX()+this.brushSize, event.getY()+this.brushSize);
-        } else {
-            if(!viewPort.contains(event.getX()-this.brushSize, event.getY()-this.brushSize,
-                    event.getX()+this.brushSize, event.getY()+this.brushSize)) {
-                System.out.println();
-            }
+        if(event.getY()-this.brushSize < min.getY()) {
+            min = new Point2D(min.getX(), event.getY()-this.brushSize);
+        } else if (event.getY()+this.brushSize > max.getY()) {
+            max = new Point2D(max.getX(), event.getY()+this.brushSize);
         }
     }
 
