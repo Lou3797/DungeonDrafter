@@ -21,6 +21,8 @@ public class BrushTool extends PenTool {
     public void mouseReleased(MouseEvent event, GraphicsContext gc) {
         System.out.println("BrushTool:MouseReleased @ " + getEventCoordinates(event));
         drawCircle(event, gc);
+
+        gc.clearRect(0, 0, 600, 450);
     }
 
     private void drawCircle(MouseEvent event, GraphicsContext gc) {
