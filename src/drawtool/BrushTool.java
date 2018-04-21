@@ -24,13 +24,13 @@ public class BrushTool extends PenTool {
     @Override
     public void mouseDragged(MouseEvent event, Map map) {
         drawCircle(event, map.getScratchLayer().getGraphicsContext2D());
-        comparePoints(event);
+        comparePoints(event, map);
     }
 
     @Override
     public void mouseReleased(MouseEvent event, Map map) {
         drawCircle(event, map.getScratchLayer().getGraphicsContext2D());
-        comparePoints(event);
+        comparePoints(event, map);
 
         map.getInvoker().invoke(new DrawCommand(map.getScratchLayer(), map.getCurrentLayer(),
                 new Rectangle2D(min.getX(), min.getY(), (max.getX()-min.getX()), (max.getY()-min.getY()))));
@@ -43,7 +43,7 @@ public class BrushTool extends PenTool {
         gc.fillOval(event.getX()-this.brushSize, event.getY()-this.brushSize, this.brushSize*2, this.brushSize*2);
     }
 
-    private void comparePoints(MouseEvent event) {
+    private void comparePoints(MouseEvent event, Map map) {
         if(event.getX()-this.brushSize < min.getX()) {
             min = new Point2D(event.getX()-this.brushSize, min.getY());
         } else if(event.getX()+this.brushSize > max.getX()) {
@@ -54,6 +54,18 @@ public class BrushTool extends PenTool {
             min = new Point2D(min.getX(), event.getY()-this.brushSize);
         } else if (event.getY()+this.brushSize > max.getY()) {
             max = new Point2D(max.getX(), event.getY()+this.brushSize);
+        }
+
+        if(event.getX() < 0) {
+            min = new Point2D(0, min.getY());
+        } else if (event.getX() > map.getWidth()) {
+            max = new Point2D(map.getWidth(), max.getY());
+        }
+
+        if(event.getY() < 0) {
+            min = new Point2D(min.getX(), 0);
+        } else if(event.getY() > map.getHeight()) {
+            max = new Point2D(max.getX(), map.getHeight());
         }
     }
 

@@ -38,6 +38,7 @@ public class DrawCommand implements Command {
         for(int x = (int)viewPort.getMinX(); x < viewPort.getMaxX(); x++) {
             for(int y = (int)viewPort.getMinY(); y < viewPort.getMaxY(); y++) {
                 pw.setArgb(x, y, pr.getArgb(x - (int)viewPort.getMinX(), y - (int)viewPort.getMinY()));
+                System.out.println(x + ", " + y);
             }
         }
         return true;
