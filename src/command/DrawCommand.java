@@ -26,14 +26,12 @@ public class DrawCommand implements Command {
 
     @Override
     public boolean execute() {
-        //System.out.println("executing " + getCommandName());
         this.parent.getGraphicsContext2D().drawImage(this.after, viewPort.getMinX(), viewPort.getMinY());
         return true;
     }
 
     @Override
     public boolean unexecute() {
-        //System.out.println("unexecuting " + getCommandName());
         PixelReader pr = this.before.getPixelReader();
         PixelWriter pw = this.parent.getGraphicsContext2D().getPixelWriter();
 
