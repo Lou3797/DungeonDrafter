@@ -2,6 +2,12 @@ package command;
 
 import java.util.Stack;
 
+/**
+ * A simple invoker that supports undo and redo commands.
+ *
+ * @author rothnj (Lou3797@github)
+ * @version 2018.4.21
+ */
 public class Invoker {
     private Stack<Command> undo;
     private Stack<Command> redo;
