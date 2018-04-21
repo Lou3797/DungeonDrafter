@@ -20,13 +20,14 @@ public class DrawCommand implements Command {
 
     @Override
     public boolean execute() {
+        System.out.println("executing " + getCommandName());
 
         return false;
     }
 
     @Override
     public boolean unexecute() {
-
+        System.out.println("unexecuting " + getCommandName());
         return false;
     }
 
