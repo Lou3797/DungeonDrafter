@@ -37,13 +37,13 @@ public class Window extends Application {
 
     private void rigCanvas(Canvas canvas) {
         canvas.setOnMousePressed(event -> {
-            drawTool.mousePressed(event);
+            drawTool.mousePressed(event, canvas.getGraphicsContext2D());
         });
         canvas.setOnMouseDragged(event -> {
-            drawTool.mouseDragged(event);
+            drawTool.mouseDragged(event, canvas.getGraphicsContext2D());
         });
         canvas.setOnMouseReleased(event -> {
-            drawTool.mouseReleased(event);
+            drawTool.mouseReleased(event, canvas.getGraphicsContext2D());
         });
     }
 }
