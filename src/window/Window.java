@@ -87,7 +87,7 @@ public class Window extends Application {
     }
 
     private void refreshLayers() {
-        this.layersPane.getChildren().addAll(this.maps.get(this.currentMapIndex).getLayers());
+        this.layersPane.getChildren().setAll(this.maps.get(this.currentMapIndex).getLayers());
     }
 
     public Map getCurrentMap() {
@@ -102,9 +102,10 @@ public class Window extends Application {
         if(file != null) {
             try {
                 DDMReader reader = new DDMReader(file);
-                //this.maps.set(this.currentMapIndex, reader.getMap());
                 List<Map> temp = new ArrayList<>();
-                temp.add(reader.getMap());
+                Map newMap = reader.getMap();
+                newMap.rigCanvasScratchLayer(this.drawTool);
+                temp.add(newMap);
                 this.maps = temp;
                 refreshLayers();
             } catch (FileNotFoundException e) {
