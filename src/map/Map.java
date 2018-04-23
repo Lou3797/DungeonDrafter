@@ -2,9 +2,12 @@ package map;
 
 import command.Invoker;
 import drawtool.DrawStrategy;
+import filetype.reader.DDMReader;
 import javafx.scene.paint.Color;
 import map.layer.Layer;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +39,7 @@ public class Map {
         this.layers = new ArrayList<>();
         this.layers.add(temp);
         this.currentLayerIndex = 0;
+        addScratchLayer();
     }
 
     public Map(int width, int height) {
@@ -44,6 +48,10 @@ public class Map {
 
     public Map() {
         this(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_GRIDSIZE, DEFAULT_NAME);
+    }
+
+    public Map(File file) throws FileNotFoundException {
+        DDMReader reader = new DDMReader(file);
     }
 
     public void rigCanvasScratchLayer(DrawStrategy drawTool) {

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class DDMReader {
+    private Map map;
 
     public DDMReader(File file) throws FileNotFoundException {
         Scanner scanner = new Scanner(file);
@@ -27,6 +28,7 @@ public class DDMReader {
         temp.add(layer);
 
         map.importLayers(temp);
+        this.map = map;
     }
 
     private Layer createLayer(Map map, Scanner scanner) {
@@ -37,6 +39,7 @@ public class DDMReader {
             int x = scanner.nextInt();
             int y = scanner.nextInt();
             int len = scanner.nextInt();
+            System.out.println(x + " " + y + " " + len);
             drawLine(x, y, len, gc);
         }
 
@@ -47,6 +50,10 @@ public class DDMReader {
         for(int x = xo; x < xo+len; x++) {
             gc.getPixelWriter().setColor(x, y, Color.BLACK);
         }
+    }
+
+    public Map getMap() {
+        return this.map;
     }
 
 }
