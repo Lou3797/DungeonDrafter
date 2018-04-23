@@ -2,6 +2,7 @@ package window;
 
 import drawtool.BrushTool;
 import drawtool.DrawStrategy;
+import filetype.reader.DDMReader;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
@@ -35,6 +36,7 @@ public class Window extends Application {
     private int height;
     private List<Map> maps;
     private int currentMapIndex;
+    private Pane layersPane;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -51,8 +53,8 @@ public class Window extends Application {
         Group root = new Group();
 
         BorderPane borderPane = new BorderPane();
-        Pane layersPane = new Pane();
-        layersPane.getChildren().addAll(map.getLayers());
+        this.layersPane = new Pane();
+        refreshLayers();
         borderPane.setCenter(layersPane);
 
         Menu edit = new Menu("Edit");
@@ -84,6 +86,10 @@ public class Window extends Application {
         Window.primaryStage = primaryStage;
     }
 
+    private void refreshLayers() {
+        this.layersPane.getChildren().addAll(this.maps.get(this.currentMapIndex).getLayers());
+    }
+
     public Map getCurrentMap() {
         return this.maps.get(this.currentMapIndex);
     }
@@ -95,7 +101,12 @@ public class Window extends Application {
         File file = fileChooser.showOpenDialog(primaryStage);
         if(file != null) {
             try {
-                this.maps.set(this.currentMapIndex, new Map(file));
+                DDMReader reader = new DDMReader(file);
+                //this.maps.set(this.currentMapIndex, reader.getMap());
+                List<Map> temp = new ArrayList<>();
+                temp.add(reader.getMap());
+                this.maps = temp;
+                refreshLayers();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

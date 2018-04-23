@@ -34,8 +34,8 @@ public class DDMReader {
     private Layer createLayer(Map map, Scanner scanner) {
         Layer temp = new Layer(map);
         GraphicsContext gc = temp.getGraphicsContext2D();
-        gc.setFill(Color.BLACK);
         while(scanner.hasNextLine()) {
+            gc.setFill(Color.BLACK);
             int x = scanner.nextInt();
             int y = scanner.nextInt();
             int len = scanner.nextInt();
@@ -49,6 +49,8 @@ public class DDMReader {
     private void drawLine(int xo, int y, int len, GraphicsContext gc) {
         for(int x = xo; x < xo+len; x++) {
             gc.getPixelWriter().setColor(x, y, Color.BLACK);
+            //gc.fillRect(0, 0, 50, 50);
+            System.out.println("Pixel at " + x + ", " + y + " set to BLACK");
         }
     }
 
