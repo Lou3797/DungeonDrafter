@@ -28,8 +28,8 @@ import java.util.List;
 public class Window extends Application {
     public static Stage primaryStage;
     private DrawStrategy drawTool;
-    public int width;
-    public int height;
+    private int width;
+    private int height;
     private List<Map> maps;
     private int currentMapIndex;
 
@@ -63,7 +63,14 @@ public class Window extends Application {
         undo.setAccelerator(new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN));
         redo.setAccelerator(new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN));
         zoom.setAccelerator(new KeyCodeCombination(KeyCode.Z));
-        MenuBar menuBar = new MenuBar(edit);
+
+        Menu file = new Menu("File");
+        MenuItem load = new MenuItem("Open");
+        load.setOnAction(this::open);
+        load.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
+        file.getItems().addAll(load);
+
+        MenuBar menuBar = new MenuBar(file, edit);
         borderPane.setTop(menuBar);
 
         root.getChildren().add(borderPane);
@@ -74,10 +81,12 @@ public class Window extends Application {
         Window.primaryStage = primaryStage;
     }
 
-
-
     public Map getCurrentMap() {
         return this.maps.get(this.currentMapIndex);
+    }
+
+    private void open(ActionEvent event) {
+
     }
 
     private boolean undo(ActionEvent event) {
