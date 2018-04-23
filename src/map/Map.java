@@ -1,6 +1,7 @@
 package map;
 
 import command.Invoker;
+import drawtool.DrawStrategy;
 import javafx.scene.paint.Color;
 import map.layer.Layer;
 
@@ -44,6 +45,18 @@ public class Map {
 
     public Map() {
         this(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_GRIDSIZE, DEFAULT_NAME);
+    }
+
+    public void rigCanvasScratchLayer(DrawStrategy drawTool) {
+        getScratchLayer().setOnMousePressed(event -> {
+            drawTool.mousePressed(event, this);
+        });
+        getScratchLayer().setOnMouseDragged(event -> {
+            drawTool.mouseDragged(event, this);
+        });
+        getScratchLayer().setOnMouseReleased(event -> {
+            drawTool.mouseReleased(event, this);
+        });
     }
 
     public int getWidth() {
