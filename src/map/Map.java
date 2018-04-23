@@ -32,10 +32,9 @@ public class Map {
         Layer temp = new Layer(this);
         temp.getGraphicsContext2D().setFill(Color.LIGHTBLUE);
         temp.getGraphicsContext2D().fillRect(0, 0, this.width, this.height);
+
         this.layers = new ArrayList<>();
-        layers.add(temp);
-        Layer scratch = new Layer(this);
-        layers.add(scratch);
+        this.layers.add(temp);
         this.currentLayerIndex = 0;
     }
 
@@ -81,5 +80,16 @@ public class Map {
 
     public Invoker getInvoker() {
         return this.invoker;
+    }
+
+    public void importLayers(List<Layer> layers) {
+        this.layers = layers;
+        this.currentLayerIndex = this.layers.size()-1;
+        addScratchLayer();
+    }
+
+    private void addScratchLayer() {
+        Layer scratch = new Layer(this);
+        this.layers.add(scratch);
     }
 }

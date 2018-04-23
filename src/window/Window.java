@@ -19,9 +19,11 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import map.Map;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,7 +88,13 @@ public class Window extends Application {
     }
 
     private void open(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Dungeon Drafter Map File");
+        //fileChooser.setInitialDirectory;
+        File file = fileChooser.showOpenDialog(primaryStage);
+        if(file != null) {
 
+        }
     }
 
     private boolean undo(ActionEvent event) {
