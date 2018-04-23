@@ -1,6 +1,7 @@
 package map;
 
 import command.Invoker;
+import javafx.scene.paint.Color;
 import map.layer.Layer;
 
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ public class Map {
         this.name = name;
 
         Layer temp = new Layer(this);
+        temp.getGraphicsContext2D().setFill(Color.LIGHTBLUE);
+        temp.getGraphicsContext2D().fillRect(0, 0, this.width, this.height);
         this.layers = new ArrayList<>();
         layers.add(temp);
         Layer scratch = new Layer(this);
