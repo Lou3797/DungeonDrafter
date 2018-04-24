@@ -2,12 +2,17 @@ package window;
 
 import drawtool.BrushTool;
 import drawtool.DrawStrategy;
+import filetype.reader.DDMReader;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.control.*;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
@@ -17,17 +22,20 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import map.Map;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Window extends Application {
     public static Stage primaryStage;
     private DrawStrategy drawTool;
-    public int width;
-    public int height;
+    private int width;
+    private int height;
     private List<Map> maps;
     private TabPane mapTabs;
 
@@ -46,9 +54,12 @@ public class Window extends Application {
 
         Menu file = new Menu("File");
         MenuItem newMap = new MenuItem("New Map");
-        newMap.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN));
+        MenuItem load = new MenuItem("Open");
         newMap.setOnAction(this::newMap);
-        file.getItems().setAll(newMap);
+        load.setOnAction(this::open);
+        newMap.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN));
+        load.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
+        file.getItems().addAll(newMap, load);
 
         Menu edit = new Menu("Edit");
         MenuItem undo = new MenuItem("Undo");
@@ -71,8 +82,6 @@ public class Window extends Application {
         Window.primaryStage = primaryStage;
     }
 
-
-
     public Map getCurrentMap() {
         if(this.maps.size() == 0) {
             return null;
@@ -85,12 +94,12 @@ public class Window extends Application {
     private void newMap(ActionEvent event) {
         System.out.println("New Map");
         Map map = new Map(this.width, this.height);
-        map.rigCanvasScratchLayer(this.drawTool);
-        this.maps.add(map);
         addMapToTabs(map);
     }
 
     private void addMapToTabs(Map map) {
+        this.maps.add(map);
+        map.rigCanvasScratchLayer(this.drawTool);
         Pane mapPane = new Pane();
         mapPane.getChildren().addAll(map.getLayers());
         Tab tab = new Tab();
@@ -106,12 +115,28 @@ public class Window extends Application {
         this.mapTabs.getSelectionModel().select(this.maps.size()-1);
     }
 
+    private void open(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Dungeon Drafter Map File");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+        fileChooser.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("Dungeon Drafter Maps", "*.ddm"));
+        File file = fileChooser.showOpenDialog(primaryStage);
+        if(file != null) {
+            try {
+                DDMReader reader = new DDMReader(file);
+                addMapToTabs(reader.getMap());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private boolean undo(ActionEvent event) {
-        return this.maps.get(this.mapTabs.getSelectionModel().getSelectedIndex()).getInvoker().undo();
+        return getCurrentMap().getInvoker().undo();
     }
 
     private boolean redo(ActionEvent event) {
-        return this.maps.get(this.mapTabs.getSelectionModel().getSelectedIndex()).getInvoker().redo();
+        return getCurrentMap().getInvoker().redo();
     }
 
     private void zoom(ActionEvent event) {
