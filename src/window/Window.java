@@ -8,11 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
@@ -145,6 +141,8 @@ public class Window extends Application {
         this.maps.add(map);
         map.rigCanvasScratchLayer(this.drawTool);
         Pane mapPane = new Pane();
+        ScrollPane scrollPane = new ScrollPane(mapPane);
+
         mapPane.getChildren().addAll(map.getLayers());
         Tab tab = new Tab();
         tab.setOnClosed(event1 -> {
@@ -154,7 +152,7 @@ public class Window extends Application {
 
         });
         tab.setText(map.getName());
-        tab.setContent(mapPane);
+        tab.setContent(scrollPane);
         this.mapTabs.getTabs().add(tab);
         this.mapTabs.getSelectionModel().select(this.maps.size()-1);
     }
