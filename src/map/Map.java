@@ -8,6 +8,13 @@ import map.layer.Layer;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A single map. Composed of multiple Layers.
+ *
+ * @author rothnj (Lou3797@github)
+ * @version 2018.4.24
+ * @since 4/21/2018
+ */
 public class Map {
     private static final int DEFAULT_WIDTH = 1120;
     private static final int DEFAULT_HEIGHT = 700;
@@ -15,6 +22,10 @@ public class Map {
     private static final String DEFAULT_NAME = "New Map";
 
     private Invoker invoker;
+
+    /**
+     * Internal list of layers the map has.
+     */
     private List<Layer> layers;
     private int currentLayerIndex;
     private int width;

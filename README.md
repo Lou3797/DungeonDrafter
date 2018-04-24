@@ -9,6 +9,7 @@ A JavaFX based application used for creating Dungeons and Dragons maps utilizing
 - [x] Have proper use of the scratch canvas layer
 - [x] Allow undo and redo via ctrl+z
 - [x] Add basic ability to read in a new map from a custom file format
+- [x] Add documentation to all Objects and methods
 - [ ] Update map list after closing a map tab
 - [ ] Add ability to save maps
 - [ ] Be able to view map 1:1 or 2:1
