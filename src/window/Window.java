@@ -39,18 +39,10 @@ public class Window extends Application {
         this.height = 450;
         this.maps = new ArrayList<>();
 
-        //Map map = new Map(this.width, this.height);
-        //this.maps.add(map);
-        //this.currentMapIndex = 0;
-
         primaryStage.setTitle("Re:Dungeon Drafter <Final Mix> Re:coded");
         Group root = new Group();
         BorderPane borderPane = new BorderPane();
         this.mapTabs = new TabPane();
-
-        //Pane layersPane = new Pane();
-        //layersPane.getChildren().addAll(map.getLayers());
-
         borderPane.setCenter(this.mapTabs);
 
         Menu file = new Menu("File");
@@ -71,11 +63,10 @@ public class Window extends Application {
         redo.setAccelerator(new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN));
         zoom.setAccelerator(new KeyCodeCombination(KeyCode.Z));
         MenuBar menuBar = new MenuBar(file, edit);
+        menuBar.prefWidthProperty().bind(primaryStage.widthProperty());
         borderPane.setTop(menuBar);
 
         root.getChildren().add(borderPane);
-        //getCurrentMap().rigCanvasScratchLayer(this.drawTool);
-
         primaryStage.setScene(new Scene(root, this.width, this.height));
         primaryStage.show();
         Window.primaryStage = primaryStage;
@@ -93,11 +84,19 @@ public class Window extends Application {
         map.rigCanvasScratchLayer(this.drawTool);
         this.maps.add(map);
         this.currentMapIndex = this.maps.size()-1;
+        addMapToTabs(map);
+    }
 
+    private void addMapToTabs(Map map) {
         Pane mapPane = new Pane();
         mapPane.getChildren().addAll(map.getLayers());
-
         Tab tab = new Tab();
+        tab.setOnClosed(event1 -> {
+
+        });
+        tab.setOnSelectionChanged(event1 -> {
+
+        });
         tab.setText(map.getName());
         tab.setContent(mapPane);
         this.mapTabs.getTabs().add(tab);
