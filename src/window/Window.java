@@ -8,7 +8,11 @@ import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.control.*;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
@@ -114,7 +118,8 @@ public class Window extends Application {
     private void open(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Dungeon Drafter Map File");
-        //fileChooser.setInitialDirectory;
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+        fileChooser.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("Dungeon Drafter Maps", "*.ddm"));
         File file = fileChooser.showOpenDialog(primaryStage);
         if(file != null) {
             try {
