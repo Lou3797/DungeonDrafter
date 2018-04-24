@@ -29,7 +29,6 @@ public class Window extends Application {
     public int width;
     public int height;
     private List<Map> maps;
-    private int currentMapIndex;
     private TabPane mapTabs;
 
     @Override
@@ -75,7 +74,12 @@ public class Window extends Application {
 
 
     public Map getCurrentMap() {
-        return this.maps.get(this.currentMapIndex);
+        if(this.maps.size() == 0) {
+            return null;
+        } else {
+            return this.maps.get(this.mapTabs.getSelectionModel().getSelectedIndex());
+        }
+
     }
 
     private void newMap(ActionEvent event) {
@@ -83,7 +87,6 @@ public class Window extends Application {
         Map map = new Map(this.width, this.height);
         map.rigCanvasScratchLayer(this.drawTool);
         this.maps.add(map);
-        this.currentMapIndex = this.maps.size()-1;
         addMapToTabs(map);
     }
 
@@ -104,11 +107,11 @@ public class Window extends Application {
     }
 
     private boolean undo(ActionEvent event) {
-        return this.maps.get(this.currentMapIndex).getInvoker().undo();
+        return this.maps.get(this.mapTabs.getSelectionModel().getSelectedIndex()).getInvoker().undo();
     }
 
     private boolean redo(ActionEvent event) {
-        return this.maps.get(this.currentMapIndex).getInvoker().redo();
+        return this.maps.get(this.mapTabs.getSelectionModel().getSelectedIndex()).getInvoker().redo();
     }
 
     private void zoom(ActionEvent event) {
