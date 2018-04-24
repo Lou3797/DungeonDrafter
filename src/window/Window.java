@@ -7,9 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
@@ -48,9 +46,18 @@ public class Window extends Application {
         Group root = new Group();
 
         BorderPane borderPane = new BorderPane();
+        TabPane tabPane = new TabPane();
+        Tab tab = new Tab();
         Pane layersPane = new Pane();
         layersPane.getChildren().addAll(map.getLayers());
         borderPane.setCenter(layersPane);
+
+        Menu file = new Menu("File");
+        MenuItem newMap = new MenuItem("New Map");
+        newMap.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN));
+        newMap.setOnAction(this::newMap);
+        file.getItems().setAll(newMap);
+
 
         Menu edit = new Menu("Edit");
         MenuItem undo = new MenuItem("Undo");
@@ -63,7 +70,7 @@ public class Window extends Application {
         undo.setAccelerator(new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN));
         redo.setAccelerator(new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN));
         zoom.setAccelerator(new KeyCodeCombination(KeyCode.Z));
-        MenuBar menuBar = new MenuBar(edit);
+        MenuBar menuBar = new MenuBar(file, edit);
         borderPane.setTop(menuBar);
 
         root.getChildren().add(borderPane);
@@ -78,6 +85,10 @@ public class Window extends Application {
 
     public Map getCurrentMap() {
         return this.maps.get(this.currentMapIndex);
+    }
+
+    private void newMap(ActionEvent event) {
+        System.out.println("New Map");
     }
 
     private boolean undo(ActionEvent event) {
