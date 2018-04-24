@@ -139,7 +139,7 @@ public class Window extends Application {
      */
     private void addMapToTabs(Map map) {
         this.maps.add(map);
-        map.rigCanvasScratchLayer(this.drawTool);
+        map.rigCanvasMouseEvents(this.drawTool);
         Pane mapPane = new Pane();
         ScrollPane scrollPane = new ScrollPane(mapPane);
 

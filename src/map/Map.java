@@ -64,7 +64,7 @@ public class Map {
     }
     */
 
-    public void rigCanvasScratchLayer(DrawStrategy drawTool) {
+    public void rigCanvasMouseEvents(DrawStrategy drawTool) {
         getScratchLayer().setOnMousePressed(event -> {
             drawTool.mousePressed(event, this);
         });
