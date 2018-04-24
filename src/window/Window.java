@@ -34,7 +34,6 @@ public class Window extends Application {
     private int height;
     private List<Map> maps;
     private TabPane mapTabs;
-    private Pane layersPane;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -51,13 +50,12 @@ public class Window extends Application {
 
         Menu file = new Menu("File");
         MenuItem newMap = new MenuItem("New Map");
-        newMap.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN));
-        newMap.setOnAction(this::newMap);
         MenuItem load = new MenuItem("Open");
+        newMap.setOnAction(this::newMap);
         load.setOnAction(this::open);
+        newMap.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN));
         load.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
-        file.getItems().addAll(load);
-        file.getItems().setAll(newMap);
+        file.getItems().addAll(newMap, load);
 
         Menu edit = new Menu("Edit");
         MenuItem undo = new MenuItem("Undo");
@@ -80,10 +78,6 @@ public class Window extends Application {
         Window.primaryStage = primaryStage;
     }
 
-    private void refreshLayers() {
-        this.layersPane.getChildren().setAll(getCurrentMap().getLayers());
-    }
-
     public Map getCurrentMap() {
         if(this.maps.size() == 0) {
             return null;
@@ -96,12 +90,12 @@ public class Window extends Application {
     private void newMap(ActionEvent event) {
         System.out.println("New Map");
         Map map = new Map(this.width, this.height);
-        map.rigCanvasScratchLayer(this.drawTool);
-        this.maps.add(map);
         addMapToTabs(map);
     }
 
     private void addMapToTabs(Map map) {
+        this.maps.add(map);
+        map.rigCanvasScratchLayer(this.drawTool);
         Pane mapPane = new Pane();
         mapPane.getChildren().addAll(map.getLayers());
         Tab tab = new Tab();
@@ -125,12 +119,7 @@ public class Window extends Application {
         if(file != null) {
             try {
                 DDMReader reader = new DDMReader(file);
-                List<Map> temp = new ArrayList<>();
-                Map newMap = reader.getMap();
-                newMap.rigCanvasScratchLayer(this.drawTool);
-                temp.add(newMap);
-                this.maps = temp;
-                //refreshLayers();
+                addMapToTabs(reader.getMap());
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -138,11 +127,11 @@ public class Window extends Application {
     }
 
     private boolean undo(ActionEvent event) {
-        return this.maps.get(this.mapTabs.getSelectionModel().getSelectedIndex()).getInvoker().undo();
+        return getCurrentMap().getInvoker().undo();
     }
 
     private boolean redo(ActionEvent event) {
-        return this.maps.get(this.mapTabs.getSelectionModel().getSelectedIndex()).getInvoker().redo();
+        return getCurrentMap().getInvoker().redo();
     }
 
     private void zoom(ActionEvent event) {
