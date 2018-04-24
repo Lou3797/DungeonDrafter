@@ -67,6 +67,10 @@ public class Map {
         return this.height;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     public Layer getCurrentLayer() {
         return this.layers.get(this.currentLayerIndex);
     }

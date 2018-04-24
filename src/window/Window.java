@@ -30,6 +30,7 @@ public class Window extends Application {
     public int height;
     private List<Map> maps;
     private int currentMapIndex;
+    private TabPane mapTabs;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -38,26 +39,25 @@ public class Window extends Application {
         this.height = 450;
         this.maps = new ArrayList<>();
 
-        Map map = new Map(this.width, this.height);
-        this.maps.add(map);
-        this.currentMapIndex = 0;
+        //Map map = new Map(this.width, this.height);
+        //this.maps.add(map);
+        //this.currentMapIndex = 0;
 
         primaryStage.setTitle("Re:Dungeon Drafter <Final Mix> Re:coded");
         Group root = new Group();
-
         BorderPane borderPane = new BorderPane();
-        TabPane tabPane = new TabPane();
-        Tab tab = new Tab();
-        Pane layersPane = new Pane();
-        layersPane.getChildren().addAll(map.getLayers());
-        borderPane.setCenter(layersPane);
+        this.mapTabs = new TabPane();
+
+        //Pane layersPane = new Pane();
+        //layersPane.getChildren().addAll(map.getLayers());
+
+        borderPane.setCenter(this.mapTabs);
 
         Menu file = new Menu("File");
         MenuItem newMap = new MenuItem("New Map");
         newMap.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN));
         newMap.setOnAction(this::newMap);
         file.getItems().setAll(newMap);
-
 
         Menu edit = new Menu("Edit");
         MenuItem undo = new MenuItem("Undo");
@@ -74,9 +74,9 @@ public class Window extends Application {
         borderPane.setTop(menuBar);
 
         root.getChildren().add(borderPane);
-        getCurrentMap().rigCanvasScratchLayer(this.drawTool);
+        //getCurrentMap().rigCanvasScratchLayer(this.drawTool);
 
-        primaryStage.setScene(new Scene(root));
+        primaryStage.setScene(new Scene(root, this.width, this.height));
         primaryStage.show();
         Window.primaryStage = primaryStage;
     }
@@ -89,6 +89,19 @@ public class Window extends Application {
 
     private void newMap(ActionEvent event) {
         System.out.println("New Map");
+        Map map = new Map(this.width, this.height);
+        map.rigCanvasScratchLayer(this.drawTool);
+        this.maps.add(map);
+        this.currentMapIndex = this.maps.size()-1;
+
+        Pane mapPane = new Pane();
+        mapPane.getChildren().addAll(map.getLayers());
+
+        Tab tab = new Tab();
+        tab.setText(map.getName());
+        tab.setContent(mapPane);
+        this.mapTabs.getTabs().add(tab);
+        this.mapTabs.getSelectionModel().select(this.maps.size()-1);
     }
 
     private boolean undo(ActionEvent event) {
