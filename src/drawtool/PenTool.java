@@ -4,6 +4,13 @@ import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
 import map.Map;
 
+/**
+ * An abstract class for any tool that is manipulated with the cursor like a pen.
+ *
+ * @author rothnj (Lou3797@github)
+ * @version 2018.4.21
+ * @since 4/21/2018
+ */
 public abstract class PenTool implements DrawStrategy {
     protected int brushSize = 10;
     protected Point2D min;

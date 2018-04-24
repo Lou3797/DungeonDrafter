@@ -12,6 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Reads the custom DDM map format and converts that information into a Map.
+ *
+ * @author rothnj (Lou3797@github)
+ * @version 2018.4.23
+ * @since 4/23/2018
+ */
 public class DDMReader {
     private Map map;
 
@@ -39,7 +46,6 @@ public class DDMReader {
             int x = scanner.nextInt();
             int y = scanner.nextInt();
             int len = scanner.nextInt();
-            System.out.println(x + " " + y + " " + len);
             drawLine(x, y, len, gc);
         }
 
@@ -49,8 +55,6 @@ public class DDMReader {
     private void drawLine(int xo, int y, int len, GraphicsContext gc) {
         for(int x = xo; x < xo+len; x++) {
             gc.getPixelWriter().setColor(x, y, Color.BLACK);
-            //gc.fillRect(0, 0, 50, 50);
-            System.out.println("Pixel at " + x + ", " + y + " set to BLACK");
         }
     }
 

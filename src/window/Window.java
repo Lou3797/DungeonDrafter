@@ -31,12 +31,42 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The main window of Dungeon Drafter. Holds all UI elements.
+ *
+ * @author rothnj (Lou3797@github)
+ * @version 2018.4.24
+ * @since 4/21/2018
+ */
 public class Window extends Application {
+    /**
+     * The primary stage for this application. Static so popup windows can refer to it.
+     */
     public static Stage primaryStage;
+
+    /**
+     * The drawing tool selected by the user.
+     */
     private DrawStrategy drawTool;
+
+    /**
+     * Window width.
+     */
     private int width;
+
+    /**
+     * Window height.
+     */
     private int height;
+
+    /**
+     * Internal list of opened Maps.
+     */
     private List<Map> maps;
+
+    /**
+     * Maps are added to this as they are opened.
+     */
     private TabPane mapTabs;
 
     @Override
@@ -52,6 +82,7 @@ public class Window extends Application {
         this.mapTabs = new TabPane();
         borderPane.setCenter(this.mapTabs);
 
+        //Create Menu for "File" options
         Menu file = new Menu("File");
         MenuItem newMap = new MenuItem("New Map");
         MenuItem load = new MenuItem("Open");
@@ -61,6 +92,7 @@ public class Window extends Application {
         load.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
         file.getItems().addAll(newMap, load);
 
+        //Create Menu for "Edit" options
         Menu edit = new Menu("Edit");
         MenuItem undo = new MenuItem("Undo");
         MenuItem redo = new MenuItem("Redo");
@@ -82,6 +114,10 @@ public class Window extends Application {
         Window.primaryStage = primaryStage;
     }
 
+    /**
+     * Refers to the TabPane selection model and fetches the map from the internal List at the same index.
+     * @return The currently selected Map in the TabPane.
+     */
     public Map getCurrentMap() {
         if(this.maps.size() == 0) {
             return null;
@@ -91,12 +127,20 @@ public class Window extends Application {
 
     }
 
+    /**
+     * Creates a new Map using the default constructor.
+     * @param event The event Object for this action.
+     */
     private void newMap(ActionEvent event) {
         System.out.println("New Map");
         Map map = new Map(this.width, this.height);
         addMapToTabs(map);
     }
 
+    /**
+     * Adds the given map to the TabPane as a new Tab and sets its mouse events to use the DrawTool events.
+     * @param map The Map being added.
+     */
     private void addMapToTabs(Map map) {
         this.maps.add(map);
         map.rigCanvasScratchLayer(this.drawTool);
@@ -115,6 +159,10 @@ public class Window extends Application {
         this.mapTabs.getSelectionModel().select(this.maps.size()-1);
     }
 
+    /**
+     * Opens a FileChooser and allows the user to load an external map from a file.
+     * @param event The event Object for this action.
+     */
     private void open(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Dungeon Drafter Map File");
@@ -131,10 +179,20 @@ public class Window extends Application {
         }
     }
 
+    /**
+     * Calls the Invoker's undo method for the currently selected Map.
+     * @param event The event Object for this action.
+     * @return True if the undo was successful.
+     */
     private boolean undo(ActionEvent event) {
         return getCurrentMap().getInvoker().undo();
     }
 
+    /**
+     * Calls the Invoker's redo method for the currently selected Map.
+     * @param event The event Object for this action.
+     * @return True if the redo was successful.
+     */
     private boolean redo(ActionEvent event) {
         return getCurrentMap().getInvoker().redo();
     }

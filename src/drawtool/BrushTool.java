@@ -8,6 +8,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import map.Map;
 
+/**
+ * A circular brush tool for drawing on a Layer.
+ *
+ * @author rothnj (Lou3797@github)
+ * @version 2018.4.21
+ * @since 4/21/2018
+ */
 public class BrushTool extends PenTool {
 
     @Override

@@ -8,6 +8,13 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.paint.Color;
 
+/**
+ * The command for a basic canvas modification
+ *
+ * @author rothnj (Lou3797@github)
+ * @version 2018.4.21
+ * @since 4/21/2018
+ */
 public class DrawCommand implements Command {
     private Image after;
     private Image before;
