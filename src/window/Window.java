@@ -7,9 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
@@ -31,7 +29,7 @@ public class Window extends Application {
     public int width;
     public int height;
     private List<Map> maps;
-    private int currentMapIndex;
+    private TabPane mapTabs;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -40,17 +38,17 @@ public class Window extends Application {
         this.height = 450;
         this.maps = new ArrayList<>();
 
-        Map map = new Map(this.width, this.height);
-        this.maps.add(map);
-        this.currentMapIndex = 0;
-
         primaryStage.setTitle("Re:Dungeon Drafter <Final Mix> Re:coded");
         Group root = new Group();
-
         BorderPane borderPane = new BorderPane();
-        Pane layersPane = new Pane();
-        layersPane.getChildren().addAll(map.getLayers());
-        borderPane.setCenter(layersPane);
+        this.mapTabs = new TabPane();
+        borderPane.setCenter(this.mapTabs);
+
+        Menu file = new Menu("File");
+        MenuItem newMap = new MenuItem("New Map");
+        newMap.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN));
+        newMap.setOnAction(this::newMap);
+        file.getItems().setAll(newMap);
 
         Menu edit = new Menu("Edit");
         MenuItem undo = new MenuItem("Undo");
@@ -63,13 +61,12 @@ public class Window extends Application {
         undo.setAccelerator(new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN));
         redo.setAccelerator(new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN));
         zoom.setAccelerator(new KeyCodeCombination(KeyCode.Z));
-        MenuBar menuBar = new MenuBar(edit);
+        MenuBar menuBar = new MenuBar(file, edit);
+        menuBar.prefWidthProperty().bind(primaryStage.widthProperty());
         borderPane.setTop(menuBar);
 
         root.getChildren().add(borderPane);
-        getCurrentMap().rigCanvasScratchLayer(this.drawTool);
-
-        primaryStage.setScene(new Scene(root));
+        primaryStage.setScene(new Scene(root, this.width, this.height));
         primaryStage.show();
         Window.primaryStage = primaryStage;
     }
@@ -77,15 +74,44 @@ public class Window extends Application {
 
 
     public Map getCurrentMap() {
-        return this.maps.get(this.currentMapIndex);
+        if(this.maps.size() == 0) {
+            return null;
+        } else {
+            return this.maps.get(this.mapTabs.getSelectionModel().getSelectedIndex());
+        }
+
+    }
+
+    private void newMap(ActionEvent event) {
+        System.out.println("New Map");
+        Map map = new Map(this.width, this.height);
+        map.rigCanvasScratchLayer(this.drawTool);
+        this.maps.add(map);
+        addMapToTabs(map);
+    }
+
+    private void addMapToTabs(Map map) {
+        Pane mapPane = new Pane();
+        mapPane.getChildren().addAll(map.getLayers());
+        Tab tab = new Tab();
+        tab.setOnClosed(event1 -> {
+
+        });
+        tab.setOnSelectionChanged(event1 -> {
+
+        });
+        tab.setText(map.getName());
+        tab.setContent(mapPane);
+        this.mapTabs.getTabs().add(tab);
+        this.mapTabs.getSelectionModel().select(this.maps.size()-1);
     }
 
     private boolean undo(ActionEvent event) {
-        return this.maps.get(this.currentMapIndex).getInvoker().undo();
+        return this.maps.get(this.mapTabs.getSelectionModel().getSelectedIndex()).getInvoker().undo();
     }
 
     private boolean redo(ActionEvent event) {
-        return this.maps.get(this.currentMapIndex).getInvoker().redo();
+        return this.maps.get(this.mapTabs.getSelectionModel().getSelectedIndex()).getInvoker().redo();
     }
 
     private void zoom(ActionEvent event) {
