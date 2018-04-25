@@ -21,6 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import map.Map;
+import map.layer.Layer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -139,6 +140,9 @@ public class Window extends Application {
      */
     private void addMapToTabs(Map map) {
         this.maps.add(map);
+
+        Layer cover = new Layer(map);
+
         map.rigCanvasMouseEvents(this.drawTool);
         Pane mapPane = new Pane();
         ScrollPane scrollPane = new ScrollPane(mapPane);
